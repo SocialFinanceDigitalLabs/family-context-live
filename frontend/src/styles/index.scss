@@ -1,0 +1,8 @@
+$base-font: "Nunito Sans", sans-serif;
+@import "~materialize-css/sass/materialize.scss";
+body {
+display: flex;
+min-height: 100vh;
+flex-direction: column;
+font-family: $base-font !important;
+}
