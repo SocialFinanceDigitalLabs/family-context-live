@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "family context"
+version = "0.1.0"
+description = "The Family Context project has been in the works since June 2018. It is the result of a cross-council collaboration aiming to solve some of the most entrenched problems faced by children’s social services. The primary goal of this collaborative effort is to improve outcomes for some of the most vulnerable people in our society."
+authors = ["Matthew Pugh <pughmds@cyram.org>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.1.2"
+python-webpack-boilerplate = "^1.0.0"
+django-material = "^1.11.3"
+python-decouple = "^3.6"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.10.0"
+isort = "^5.10.1"
+flake8 = "^5.0.4"
+pre-commit = "^2.20.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
