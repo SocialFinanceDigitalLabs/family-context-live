@@ -1,0 +1,12 @@
+{% extends "core/index.html" %}
+
+{% block content %}
+<div class="container portal register-page">
+    <form action="" method="post">
+        {% csrf_token %}
+        {% form form=form %}{% endform %}
+        <input type="submit" value="Submit" class="btn" />
+        <a class="btn grey lighten-1" href="{% url 'index' %}">Cancel</a>
+    </form>
+</div>
+{% endblock %}
