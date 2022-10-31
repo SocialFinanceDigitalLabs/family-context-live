@@ -3,17 +3,19 @@ repos:
      rev: 22.10.0
      hooks:
       - id: black
-        exclude: ^migrations/
+        exclude: ^core/migrations/
         args:
           - --line-length=88
    - repo: https://github.com/pycqa/isort
      rev: 5.10.1
      hooks:
       - id: isort
+        exclude: ^core/migrations/
         args: ["--profile", "black"]
    - repo: https://gitlab.com/pycqa/flake8
      rev: 5.0.4
      hooks:
-       - id: flake8
-         args:
-           - "--max-line-length=88"
+      - id: flake8
+        exclude: ^core/migrations/
+        args:
+          - "--max-line-length=88"
