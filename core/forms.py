@@ -3,7 +3,6 @@ import datetime
 from django import forms
 
 years = range(datetime.date.today().year - 120, datetime.date.today().year)
-print(years)
 
 
 class NameSearchForm(forms.Form):
