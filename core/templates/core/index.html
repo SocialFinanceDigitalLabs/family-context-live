@@ -46,7 +46,7 @@
 >
     <nav>
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Familyy Context</a>
+            <a href="#" class="brand-logo">Family Context</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
                     {% if user.is_authenticated %}
@@ -58,7 +58,12 @@
             </ul>
         </div>
     </nav>
-
+    <div class="container">
+        <div class="chip">
+            Beta
+        </div>
+        This is a new service - Your feedback will help us improve it.
+    </div>
     <div class="container">
         {% block content %}{% endblock %}
     </div>

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -57,20 +59,22 @@ class Contact(models.Model):
 
 
 class Person(models.Model):
-    cms_id = (models.CharField(max_length=50),)
-    first_name = (models.CharField(max_length=70),)
-    last_name = (models.CharField(max_length=70),)
-    date_of_birth = (models.DateField(),)
-    gender = (
-        models.CharField(
-            max_length=7, choices=Gender.choices, default=Gender.NOT_SPECIFIED
-        ),
+    cms_id = models.CharField(max_length=50, blank=True, null=True)
+    first_name = models.CharField(max_length=70, blank=True, null=True)
+    last_name = models.CharField(max_length=70, blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    gender = models.CharField(
+        max_length=7, choices=Gender.choices, default=Gender.NOT_SPECIFIED
     )
-    address = (models.CharField(max_length=256),)
-    other_fields = (models.JSONField(encoder=DjangoJSONEncoder, default=dict),)
+    address = models.CharField(max_length=256, blank=True, null=True)
+    other_fields = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
     relation = models.ManyToManyField(
         "self", through="PersonRelationship", through_fields=("person", "relation")
     )
+
+    @property
+    def age(self):
+        return int((datetime.now().date() - self.date_of_birth).days / 365.25)
 
 
 class PersonRelationship(models.Model):
