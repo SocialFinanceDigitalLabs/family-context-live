@@ -1,12 +1,10 @@
 {% extends "core/index.html" %}
 
 {% block content %}
-<div class="container portal register-page">
-    <form action="" method="post">
-        {% csrf_token %}
-        {% form form=form %}{% endform %}
-        <input type="submit" value="Submit" class="btn" />
-        <a class="btn grey lighten-1" href="{% url 'index' %}">Cancel</a>
-    </form>
-</div>
+<h2>Log In</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Log In</button>
+</form>
 {% endblock %}

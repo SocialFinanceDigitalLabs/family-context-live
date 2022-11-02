@@ -4,6 +4,6 @@ from core import views
 
 urlpatterns = [
     path("", views.index, name="home"),
-    path("search", views.index, name="search"),
-    path("person", views.index, name="person"),
+    path("search", views.search, name="search"),
+    path("person", views.person, name="person"),
 ]
