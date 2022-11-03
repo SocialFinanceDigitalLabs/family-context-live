@@ -2,12 +2,11 @@
 
 {% block content %}
 <h2>Search results for {{ terms }}</h2>
-<h3>{{ results|length }} matches found</h3>
-<div class="chip">
-    !
+<div class="matches-found">{{ results|length }} matches found</div>
+<div class="container warning-container">
+    <div class="chip warning-tag">!</div><div class="warning-label">Please note: once selecting an individual from the list below, you may see sensitive information about that individual
+    </div>
 </div>
-Please note: once selecting an individual from the list below, you may see sensitive information about that individual
-
 <table class="responsive-table highlight">
     <thead>
         <tr>
