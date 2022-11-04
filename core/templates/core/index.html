@@ -44,9 +44,9 @@
     class="bg-white font-sans leading-normal text-grey-800"
     style="overflow: hidden"
 >
-    <nav>
+    <nav class="fc-nav">
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Familyy Context</a>
+            <a href="#" class="brand-logo fc-logo">Family Context</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
                     {% if user.is_authenticated %}
@@ -58,7 +58,15 @@
             </ul>
         </div>
     </nav>
-
+    <div class="container tag-container">
+        <div class="chip tag-item">
+            Beta
+        </div>
+        <div class="tag-label">
+            This is a new service - Your feedback will help us improve it.
+        </div>
+    </div>
+    <hr />
     <div class="container">
         {% block content %}{% endblock %}
     </div>

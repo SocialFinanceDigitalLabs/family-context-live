@@ -1,0 +1,34 @@
+{% extends "core/index.html" %}
+
+{% block content %}
+<h2>Search results for {{ terms }}</h2>
+<div class="matches-found">{{ results|length }} matches found</div>
+<div class="container warning-container">
+    <div class="chip warning-tag">!</div><div class="warning-label">Please note: once selecting an individual from the list below, you may see sensitive information about that individual
+    </div>
+</div>
+<table class="responsive-table highlight">
+    <thead>
+        <tr>
+            <th>CMS ID</th>
+            <th>First Name</th>
+            <th>Family Name</th>
+            <th>Date of Birth</th>
+            <th>Age</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for result in results %}
+        <tr>
+            <td>{{ result.cms_id}} </td>
+            <td>{{ result.first_name}} </td>
+            <td>{{ result.last_name}} </td>
+            <td>{{ result.date_of_birth}} </td>
+            <td>{{ result.age }} </td>
+            <td>{{ result.address}} </td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -12,6 +12,8 @@ django = "^4.1.2"
 python-webpack-boilerplate = "^1.0.0"
 django-material = "^1.11.3"
 python-decouple = "^3.6"
+django-contrib-postgres = "^0.0.1"
+psycopg2 = "^2.9.5"
 
 
 [tool.poetry.group.dev.dependencies]

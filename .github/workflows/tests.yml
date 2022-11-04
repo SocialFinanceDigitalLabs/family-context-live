@@ -6,6 +6,15 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     strategy:
       matrix:
         python-version: ["3.10"]
@@ -43,3 +52,9 @@ jobs:
         DJANGO_SECRET_KEY: some-secret-key
         DEBUG: true
         ALLOWED_HOSTS: localhost,127.0.0.1
+        SQL_ENGINE: django.db.backends.postgresql
+        SQL_DATABASE: postgres
+        SQL_USER: postgres
+        SQL_PASSWORD: postgres
+        SQL_HOST: localhost
+        SQL_PORT: 5432
