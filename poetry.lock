@@ -169,6 +169,32 @@ python-versions = "*"
 six = "*"
 
 [[package]]
+name = "factory-boy"
+version = "3.2.1"
+description = "A versatile test fixtures replacement based on thoughtbot's factory_bot for Ruby."
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+Faker = ">=0.7.0"
+
+[package.extras]
+dev = ["Django", "Pillow", "SQLAlchemy", "coverage", "flake8", "isort", "mongoengine", "tox", "wheel (>=0.32.0)", "zest.releaser[recommended]"]
+doc = ["Sphinx", "sphinx-rtd-theme", "sphinxcontrib-spelling"]
+
+[[package]]
+name = "faker"
+version = "15.1.3"
+description = "Faker is a Python package that generates fake data for you."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+python-dateutil = ">=2.4"
+
+[[package]]
 name = "filelock"
 version = "3.8.0"
 description = "A platform independent file lock."
@@ -519,7 +545,7 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "321670519c8ade4f37324819c82cba5c2e5bb06b9e5de5cff14f50d75dc085f2"
+content-hash = "7fcc638544579963c33a2a4bc202a120844e45a0e1c1a9d874c91151affee0cc"
 
 [metadata.files]
 arrow = [
@@ -599,6 +625,14 @@ django-contrib-postgres = [
 django-material = [
     {file = "django-material-1.11.3.tar.gz", hash = "sha256:022155be14e168a67392058a7fb11382b466973e2b5942d23220d5d0886b134a"},
     {file = "django_material-1.11.3-py2.py3-none-any.whl", hash = "sha256:30a3a4fb4baaf3e6672f660197f5ac5a3c072d0bd7a8c6fa63b1cf46feb757a0"},
+]
+factory-boy = [
+    {file = "factory_boy-3.2.1-py2.py3-none-any.whl", hash = "sha256:eb02a7dd1b577ef606b75a253b9818e6f9eaf996d94449c9d5ebb124f90dc795"},
+    {file = "factory_boy-3.2.1.tar.gz", hash = "sha256:a98d277b0c047c75eb6e4ab8508a7f81fb03d2cb21986f627913546ef7a2a55e"},
+]
+faker = [
+    {file = "Faker-15.1.3-py3-none-any.whl", hash = "sha256:bd922a6ad210bb96a5b31987e10918851131c9670429172d5bfb3a5ede238a79"},
+    {file = "Faker-15.1.3.tar.gz", hash = "sha256:1bfb1b447cd45169a74a09f821cee47f51548508b62a29f6dfdab1d001d448a4"},
 ]
 filelock = [
     {file = "filelock-3.8.0-py3-none-any.whl", hash = "sha256:617eb4e5eedc82fc5f47b6d61e4d11cb837c56cb4544e39081099fa17ad109d4"},
