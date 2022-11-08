@@ -1,6 +1,8 @@
 import factory
 from factory.django import DjangoModelFactory
 
+from core.models import Contact
+
 
 class ContactFactory(DjangoModelFactory):
     name = factory.Faker("name")
@@ -10,4 +12,4 @@ class ContactFactory(DjangoModelFactory):
     other = {}
 
     class Meta:
-        model = "core.Contact"
+        model = Contact

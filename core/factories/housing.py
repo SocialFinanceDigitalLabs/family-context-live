@@ -6,7 +6,7 @@ import factory.fuzzy
 from dateutil.relativedelta import relativedelta
 from factory.django import DjangoModelFactory
 
-from core.models import ServiceInvolvement
+from core.models import Housing, ServiceInvolvement
 
 
 class HousingFactory(DjangoModelFactory):
@@ -39,4 +39,4 @@ class HousingFactory(DjangoModelFactory):
     other = {}
 
     class Meta:
-        model = "core.Housing"
+        model = Housing
