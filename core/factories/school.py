@@ -4,7 +4,7 @@ from datetime import datetime
 import factory
 from factory.django import DjangoModelFactory
 
-from core.models import ServiceInvolvement
+from core.models import School, ServiceInvolvement
 
 
 class SchoolFactory(DjangoModelFactory):
@@ -25,5 +25,5 @@ class SchoolFactory(DjangoModelFactory):
     coverage_end_date = datetime(2022, 11, 1)
 
     class Meta:
-        model = "core.School"
+        model = School
         exclude = "name_prefix"
