@@ -152,7 +152,7 @@ class School(ServiceInvolvementMetadataMixin, models.Model):
     school_name = models.CharField(max_length=100)
     contact_number = models.CharField(max_length=20)
     admission_type = models.CharField(max_length=50)
-    coverage_geographic_area = models.DateField()
+    coverage_geographic_area = models.CharField(max_length=100)
     other = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
 
 

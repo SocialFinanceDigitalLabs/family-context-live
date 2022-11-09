@@ -47,3 +47,9 @@ One thing to note, however, is the database does NOT have any data currently in,
 records in order to test.
 
 Run `docker compose down` in order to shut down the database and website.
+
+### Fake Data
+To generate fake data, simply connect to the web docker image, and run the following command:
+`poetry run python manage.py setup_test_data`. Each time you run this, it will delete all Family 
+Context Data that is outside the admin (People, Family Relationships, etc) and replace it with 
+new randomly generated records.
