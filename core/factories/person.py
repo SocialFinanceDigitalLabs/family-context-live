@@ -7,16 +7,16 @@ import factory.fuzzy
 from dateutil.relativedelta import relativedelta
 from factory.django import DjangoModelFactory
 
-from core.models import Gender, Person
+from core.models import Gender, Person, RelationshipType
 
 from .housing import HousingFactory
 from .relationship import ParentRelationshipFactory
 from .school import SchoolFactory
-from .shared import get_first_name_from_gender
+from .shared import age_from_birth_date, get_first_name_from_gender
 
 
 class ParentFactory(DjangoModelFactory):
-    cms_id = randint(1000000, 99999999)
+
     gender = factory.Faker(
         "random_element",
         elements=OrderedDict(
@@ -28,14 +28,16 @@ class ParentFactory(DjangoModelFactory):
             ]
         ),
     )
+    last_name = factory.Faker("last_name")
+    address = factory.Faker("address")
+
+    cms_id = randint(1000000, 99999999)
     date_of_birth = factory.fuzzy.FuzzyDate(
-        datetime.now() - relativedelta(years=randint(32, 55)), datetime.now()
+        datetime.now() - relativedelta(years=55),
+        datetime.now() - relativedelta(years=32),
     )
 
     first_name = factory.LazyAttribute(lambda o: get_first_name_from_gender(o.gender))
-    last_name = factory.Faker("last_name")
-
-    address = factory.Faker("address")
 
     housing = factory.RelatedFactoryList(
         HousingFactory, "person", size=lambda: randint(1, 3)
@@ -72,17 +74,25 @@ class ChildFactory(DjangoModelFactory):
     mum = factory.RelatedFactory(
         ParentRelationshipFactory,
         factory_related_name="person",
-        gender_choice=Gender.FEMALE,
-        specified_last_name=factory.SelfAttribute("..last_name"),
-        specified_address=factory.SelfAttribute("..address"),
+        relation_type=RelationshipType.PARENT,
+        passed_gender=Gender.FEMALE,
+        passed_last_name=factory.SelfAttribute("..last_name"),
+        passed_address=factory.SelfAttribute("..address"),
     )
 
     dad = factory.RelatedFactory(
         ParentRelationshipFactory,
         factory_related_name="person",
-        gender_choice=Gender.MALE,
-        specified_last_name=factory.SelfAttribute("..last_name"),
-        specified_address=factory.SelfAttribute("..address"),
+        relation_type=RelationshipType.PARENT,
+        passed_gender=Gender.MALE,
+        passed_last_name=factory.SelfAttribute("..last_name"),
+        passed_address=factory.SelfAttribute("..address"),
+    )
+
+    # Only makes sense for a child to be in school if they're older than 6...
+    school = factory.Maybe(
+        factory.LazyAttribute(lambda o: age_from_birth_date(o.date_of_birth) > 6),
+        factory.RelatedFactoryList(SchoolFactory, "person", size=lambda: randint(1, 3)),
     )
 
     class Meta:

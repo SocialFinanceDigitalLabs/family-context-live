@@ -1,0 +1,142 @@
+{% extends "core/index.html" %}
+
+{% block content %}
+    <h2>Details of individual</h2>
+
+    <div class="container">
+        <table>
+            <tr>
+                <th>First name:</th>
+                <td>{{ person.first_name }}</td>
+            </tr>
+            <tr>
+                <th>Last name:</th>
+                <td>{{ person.last_name }}</td>
+            </tr>
+            <tr>
+                <th>Date of Birth:</th>
+                <td>{{ person.date_of_birth }}</td>
+            </tr>
+            <tr>
+                <th>Gender:</th>
+                <td>{{ person.gender }}</td>
+            </tr>
+            <tr>
+                <th>Address:</th>
+                <td>{{ person.address }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Details of service involvements</h2>
+    <div class="container warning-container row">
+        <div class="chip warning-tag col s1">!</div><div class="warning-label col">For more details about
+        service involvement click here
+        </div>
+    </div>
+    <div class="container">
+        <div class="divider"></div>
+        <div class="row service-row valign-wrapper">
+            <div class="col s4 service-title">Adult Social Care</div>
+            {% if person.adult_social_care.all|length > 0 %}
+            <div class="col s4 center-align"><span class="badge records">Records Found</span></div>
+            <div class="col s4 right-align"><a class="btn-small grey lighten-3  black-text">Show</a></div>
+            {% else %}
+            <div class="col s4 center-align"><span class="badge norecords">No Records Found</span></div>
+            <div class="col s4 right-align"></div>
+            {% endif %}
+        </div>
+        <div class="divider"></div>
+        <div class="row service-row valign-wrapper">
+            <div class="col s4 service-title">Housing</div>
+            {% if person.housing.all|length > 0 %}
+            <div class="col s4 center-align"><span class="badge records">Records Found</span></div>
+            <div class="col s4 right-align"><a class="btn-small grey lighten-3  black-text">Show</a></div>
+            {% else %}
+            <div class="col s4 center-align"><span class="badge norecords">No Records Found</span></div>
+            <div class="col s4 right-align"></div>
+            {% endif %}
+        </div>
+        <div class="divider"></div>
+        <div class="row service-row valign-wrapper">
+            <div class="col s4 service-title">School</div>
+            {% if person.school.all|length > 0 %}
+            <div class="col s4 center-align"><span class="badge records">Records Found</span></div>
+            <div class="col s4 right-align"><a class="btn-small grey lighten-3  black-text">Show</a></div>
+            {% else %}
+            <div class="col s4 center-align"><span class="badge norecords">No Records Found</span></div>
+            <div class="col s4 right-align"></div>
+            {% endif %}
+        </div>
+        <div class="divider"></div>
+        <div class="row service-row valign-wrapper">
+            <div class="col s4 service-title">Health</div>
+            <div class="col s4 center-align"><span class="badge norecords">No Records Found</span></div>
+            <div class="col s4 right-align"></div>
+        </div>
+        <div class="divider"></div>
+        <div class="row service-row valign-wrapper">
+            <div class="col s4 service-title">Police</div>
+            {% if person.police.all|length > 0 %}
+            <div class="col s4 center-align"><span class="badge records">Records Found</span></div>
+            <div class="col s4 right-align"><a class="btn-small grey lighten-3  black-text">Show</a></div>
+            {% else %}
+            <div class="col s4 center-align"><span class="badge norecords">No Records Found</span></div>
+            <div class="col s4 right-align"></div>
+            {% endif %}
+        </div>
+        <div class="divider"></div>
+    </div>
+
+    <h2>Related Individuals from Your Case Management System</h2>
+    <div class="container warning-container row">
+        <div class="chip warning-tag col s1">!</div><div class="warning-label col">Please note: once selecting an
+        individual from the list below, you may see sensitive information about that individual.
+        </div>
+    </div>
+
+    <div class="container">
+        <div>
+            {{relation_count}} individuals are linked to {{person.first_name}} {{person.last_name}} in
+            your Case Management System
+        </div>
+
+        <table class="responsive-table highlight">
+            <thead>
+                <tr>
+                    <th>Relationship</th>
+                    <th>CMS ID</th>
+                    <th>First Name</th>
+                    <th>Family Name</th>
+                    <th>Date of Birth</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in person.relationships.all %}
+                <tr>
+                    <td>{{r.relation_type}}</td>
+                    <td>{{r.relation.cms_id}}</td>
+                    <td>{{r.relation.first_name}}</td>
+                    <td>{{r.relation.last_name}}</td>
+                    <td>{{r.relation.date_of_birth}}</td>
+                    <td><a class="btn-small grey lighten-3  black-text" href="{% url 'person' person_id=r.relation.id %}">Show</a></td>
+                </tr>
+                {% endfor %}
+                {% for r in person.reverse_relationships.all %}
+                <tr>
+                    {% comment %} There's probably a better way to do this {% endcomment %}
+                    {% if r.relation_type == "Parent" %}
+                        <td>Child</td>
+                    {% endif %}
+                    <td>{{r.person.cms_id}}</td>
+                    <td>{{r.person.first_name}}</td>
+                    <td>{{r.person.last_name}}</td>
+                    <td>{{r.person.date_of_birth}}</td>
+                    <td><a class="btn-small grey lighten-3  black-text" href="{% url 'person' person_id=r.person.id %}">Show</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -92,7 +92,9 @@ class PersonRelationship(models.Model):
 
 
 class ServiceSummary(models.Model):
-    person = (models.ForeignKey("Person", on_delete=models.CASCADE),)
+    person = models.ForeignKey(
+        "Person", on_delete=models.CASCADE, related_name="service_summary"
+    )
     title = models.CharField(max_length=50)
     last_synchronised = models.DateTimeField()
     coverage_start_date = models.DateField()
@@ -104,7 +106,9 @@ class ServiceSummary(models.Model):
 
 
 class Police(models.Model):
-    person = models.ForeignKey("Person", on_delete=models.CASCADE)
+    person = models.ForeignKey(
+        "Person", on_delete=models.CASCADE, related_name="police"
+    )
     police_area = models.CharField(max_length=50)
     contact = models.ForeignKey("Contact", on_delete=models.CASCADE)
     other = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
@@ -128,7 +132,9 @@ class OffenceRecords(models.Model):
 
 
 class AdultSocialCare(ServiceInvolvementMetadataMixin, models.Model):
-    person = models.ForeignKey("Person", on_delete=models.CASCADE)
+    person = models.ForeignKey(
+        "Person", on_delete=models.CASCADE, related_name="adult_social_care"
+    )
     service_involvement = models.CharField(
         choices=ServiceInvolvement.choices,
         max_length=15,
@@ -143,7 +149,7 @@ class AdultSocialCare(ServiceInvolvementMetadataMixin, models.Model):
 
 
 class School(ServiceInvolvementMetadataMixin, models.Model):
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="school")
     service_involvement = models.CharField(
         choices=ServiceInvolvement.choices,
         max_length=15,
@@ -157,7 +163,9 @@ class School(ServiceInvolvementMetadataMixin, models.Model):
 
 
 class Housing(ServiceInvolvementMetadataMixin, models.Model):
-    person = models.ForeignKey("Person", on_delete=models.CASCADE)
+    person = models.ForeignKey(
+        "Person", on_delete=models.CASCADE, related_name="housing"
+    )
     service_involvement = models.CharField(
         choices=ServiceInvolvement.choices,
         max_length=15,

@@ -84,5 +84,9 @@ def case_id_search(request):
 
 
 @login_required()
-def person(request):
-    return render(request, "person.html")
+def person(request, person_id):
+    p = Person.objects.get(id=person_id)
+    relation_count = len(p.relationships.all()) + len(p.reverse_relationships.all())
+    return render(
+        request, "person.html", {"person": p, "relation_count": relation_count}
+    )
