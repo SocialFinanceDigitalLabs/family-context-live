@@ -6,10 +6,13 @@ import factory.fuzzy
 from dateutil.relativedelta import relativedelta
 from factory.django import DjangoModelFactory
 
-from core.models import Housing, ServiceInvolvement
+from core.models import Housing, ServiceInvolvement, ServiceSummary
 
 
 class HousingFactory(DjangoModelFactory):
+    service = factory.LazyAttribute(
+        lambda o: ServiceSummary.objects.filter(title="Housing").first()
+    )
     service_involvement = factory.LazyAttribute(
         lambda o: random.choices(ServiceInvolvement.choices)[0][0]
     )

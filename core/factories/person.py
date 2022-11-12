@@ -16,7 +16,6 @@ from .shared import age_from_birth_date, get_first_name_from_gender
 
 
 class ParentFactory(DjangoModelFactory):
-
     gender = factory.Faker(
         "random_element",
         elements=OrderedDict(
@@ -31,7 +30,7 @@ class ParentFactory(DjangoModelFactory):
     last_name = factory.Faker("last_name")
     address = factory.Faker("address")
 
-    cms_id = randint(1000000, 99999999)
+    cms_id = factory.Faker("pyint", min_value=1000000, max_value=99999999)
     date_of_birth = factory.fuzzy.FuzzyDate(
         datetime.now() - relativedelta(years=55),
         datetime.now() - relativedelta(years=32),
@@ -48,7 +47,7 @@ class ParentFactory(DjangoModelFactory):
 
 
 class ChildFactory(DjangoModelFactory):
-    cms_id = randint(1000000, 99999999)
+    cms_id = factory.Faker("pyint", min_value=1000000, max_value=99999999)
     first_name = factory.LazyAttribute(lambda o: get_first_name_from_gender(o.gender))
     last_name = factory.Faker("last_name")
     address = factory.Faker("address")

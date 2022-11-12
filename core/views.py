@@ -2,11 +2,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import TrigramSimilarity
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from .forms import CmsIdForm, NameSearchForm
-from .models import Person
+from .models import Person, ServiceSummary
 
 
 def index(request):
@@ -21,6 +21,19 @@ def login(request):
 
 @login_required()
 def search(request):
+    name_form = NameSearchForm()
+    cms_form = CmsIdForm()
+    return render(
+        request,
+        "search.html",
+        {"name_form": name_form, "sub": "search", "cms_form": cms_form},
+    )
+
+    return render(request, "search.html")
+
+
+@login_required()
+def name_search(request):
     if request.method == "POST":
         form = NameSearchForm(request.POST)
         if form.is_valid():
@@ -61,7 +74,7 @@ def search(request):
     else:
         form = NameSearchForm()
 
-    return render(request, "search.html", {"form": form, "sub": "name_search"})
+    return render(request, "name_search.html", {"form": form, "sub": "name_search"})
 
 
 @login_required()
@@ -72,11 +85,17 @@ def case_id_search(request):
             cms_id = form.cleaned_data["cms_id"]
             results = Person.objects.filter(cms_id=cms_id)
 
-            return render(
-                request,
-                "search_results.html",
-                {"results": results, "terms": form.cleaned_data["cms_id"]},
-            )
+            if not results:
+                # Need to display error that record wasn't found...
+                form = CmsIdForm()
+            elif len(results) == 1:
+                return redirect(reverse("person", kwargs={"person_id": results[0].id}))
+            else:
+                return render(
+                    request,
+                    "search_results.html",
+                    {"results": results, "terms": form.cleaned_data["cms_id"]},
+                )
     else:
         form = CmsIdForm()
 
@@ -87,6 +106,10 @@ def case_id_search(request):
 def person(request, person_id):
     p = Person.objects.get(id=person_id)
     relation_count = len(p.relationships.all()) + len(p.reverse_relationships.all())
+    s = ServiceSummary.objects.all()
+
     return render(
-        request, "person.html", {"person": p, "relation_count": relation_count}
+        request,
+        "person.html",
+        {"person": p, "relation_count": relation_count, "service_list": s},
     )

@@ -1,0 +1,16 @@
+<h2>Details of Service Involvements</h2>
+    <div class="container warning-container row">
+        <div class="chip warning-tag col s1">!</div><div class="warning-label col">For more details about
+        service involvement click here
+        </div>
+    </div>
+    <div class="container">
+        {% for service in service_list %}
+        <div class="divider"></div>
+        <div class="row service-row valign-wrapper">
+            <div class="col s4 service-title">{{service.title}}</div>
+            <div class="col s5 center-align"></div>
+            <div class="col s3 right-align"></div>
+        </div>
+        {% endfor %}
+    </div>

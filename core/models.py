@@ -92,9 +92,6 @@ class PersonRelationship(models.Model):
 
 
 class ServiceSummary(models.Model):
-    person = models.ForeignKey(
-        "Person", on_delete=models.CASCADE, related_name="service_summary"
-    )
     title = models.CharField(max_length=50)
     last_synchronised = models.DateTimeField()
     coverage_start_date = models.DateField()
@@ -106,6 +103,11 @@ class ServiceSummary(models.Model):
 
 
 class Police(models.Model):
+    service = models.ForeignKey(
+        "ServiceSummary",
+        on_delete=models.CASCADE,
+        related_name="service_police_records",
+    )
     person = models.ForeignKey(
         "Person", on_delete=models.CASCADE, related_name="police"
     )
@@ -132,6 +134,11 @@ class OffenceRecords(models.Model):
 
 
 class AdultSocialCare(ServiceInvolvementMetadataMixin, models.Model):
+    service = models.ForeignKey(
+        "ServiceSummary",
+        on_delete=models.CASCADE,
+        related_name="service_adult_social_care_records",
+    )
     person = models.ForeignKey(
         "Person", on_delete=models.CASCADE, related_name="adult_social_care"
     )
@@ -149,6 +156,11 @@ class AdultSocialCare(ServiceInvolvementMetadataMixin, models.Model):
 
 
 class School(ServiceInvolvementMetadataMixin, models.Model):
+    service = models.ForeignKey(
+        "ServiceSummary",
+        on_delete=models.CASCADE,
+        related_name="service_school_records",
+    )
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="school")
     service_involvement = models.CharField(
         choices=ServiceInvolvement.choices,
@@ -163,6 +175,11 @@ class School(ServiceInvolvementMetadataMixin, models.Model):
 
 
 class Housing(ServiceInvolvementMetadataMixin, models.Model):
+    service = models.ForeignKey(
+        "ServiceSummary",
+        on_delete=models.CASCADE,
+        related_name="service_housing_records",
+    )
     person = models.ForeignKey(
         "Person", on_delete=models.CASCADE, related_name="housing"
     )
