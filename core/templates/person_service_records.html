@@ -1,0 +1,31 @@
+<div>Information was last updated on {{service.last_synchronised}}</div>
+<div>Information comes from {{service.data_source}} and covers the period {{service.coverage_start_date}} to {{service.coverage_end_date}}</div>
+{% for source in records %}
+    {% for result in source %}
+        {% if result %}
+
+        <table class="highlight">
+            <tr>
+                <th colspan="2">Result {{ forloop.counter }}</th>
+            </tr>
+            {% for key, value in result.items %}
+            <tr>
+                {% if key == "other" %}
+                <th>{{key}}</th>
+                <td>
+                    <ul>
+                        {% for other_key, other_value in value.items %}
+                            <li><b>{{other_key}}</b>: {{other_value}}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                {% else %}
+                <th>{{key}}</th>
+                <td>{{value}}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    {% endfor %}
+{% endfor %}

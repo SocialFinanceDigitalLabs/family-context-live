@@ -70,5 +70,7 @@
         {% block content %}{% endblock %}
     </div>
     {% javascript_pack 'app' attrs='charset="UTF-8"' %}
+    {% block javascript %}
+    {% endblock javascript %}
 </body>
 </html>
