@@ -3,8 +3,16 @@ $base-font: "Nunito Sans", sans-serif;
 //@import "~materialize-css/sass/components/color-variables.scss";
 @import "~materialize-css/sass/materialize.scss";
 
-$primary-color: rgb(206, 90, 87);
-$secondary-color: rgb(120, 165, 163);
+$base-font: "Nunito Sans", sans-serif;
+$button-background: rgb(0, 112, 60);
+$button-box-shadow: rgb(0, 45, 24);
+$black: rgba(0,0,0,0);
+$tag-border: rgb(191, 193, 195);
+$secondary-background: rgb(29, 112, 184);
+$secondary-text: rgb(255, 255, 255);
+$warning-background: rgb(11, 12, 12);
+$warning-text: rgb(213, 56, 128);
+$gray: rgb(112, 112, 112);
 
 main {
     padding-top: 50px;
@@ -23,15 +31,15 @@ table {
 }
 
 body {
-display: flex;
-min-height: 100vh;
-flex-direction: column;
-font-family: $base-font !important;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    font-family: $base-font;
 }
 
 .button {
-    background-color: #00703c;
-    box-shadow: 0 2px 0 #002d18;
+    background-color: $button-background;
+    box-shadow: 0 2px 0 $button-box-shadow;
     box-sizing: border-box;
     display: inline-block;
     position: relative;
@@ -40,15 +48,15 @@ font-family: $base-font !important;
     cursor: pointer;
     border-radius: 0;
     padding: 8px 10px 7px;
-    color: #ffffff;
-    border: 2px solid rgba(0,0,0,0);
+    color: $secondary-text;
+    border: 2px solid $black;
 }
 
 .tag-container {
     margin-top: 25px;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid rgb(191,193,195);
+    border-bottom: 1px solid $tag-border;
     display: inline-block;
 }
 
@@ -57,13 +65,12 @@ font-family: $base-font !important;
     display: inline-block;
     padding: 1px 8px 1px;
     outline: transparent solid 2px;
-    color: rgb(255,255,255);
-    background-color: rgb(29,112,184);
+    color: $secondary-text;
+    background-color: $secondary-background;
     letter-spacing: 1px;
     text-decoration: none;
     text-transform: uppercase;
-    border-radius: 0px;
-    display: inline;
+    border-radius: 0;
 }
 
 .tag-label {
@@ -71,8 +78,8 @@ font-family: $base-font !important;
 }
 
 .fc-nav {
-    background-color: rgb(29,112,184);
-    color: white;
+    background-color: $secondary-background;
+    color: $secondary-text;
 }
 
 .fc-logo {
@@ -80,24 +87,18 @@ font-family: $base-font !important;
 }
 
 .warning-container {
-    //box-sizing: border-box;
-    //position: relative;
+
 }
 
 .warning-tag {
     vertical-align: top;
     font-weight: 700;
-    //box-sizing: border-box;
-    //display: inline-block;
     width: 35px;
-    //min-width: 35px;
-    //min-height: 35px;
-    border: 3px solid #0b0c0c;
+    border: 3px solid $warning-background;
     border-radius: 50%;
-    color: #fff;
-    background: #0b0c0c;
+    color: $secondary-text;
+    background: $warning-background;
     font-size: 30px;
-    //line-height: 29px;
     text-align: center;
     user-select: none;
 }
@@ -105,11 +106,9 @@ font-family: $base-font !important;
 .warning-label {
     vertical-align: top;
     font-weight: 700;
-    color: #0b0c0c;
     font-size: 1.1875rem;
     line-height: 1.3157894737;
-    color: #d53880;
-    //display: inline-block;
+    color: $warning-text;
     width: 90%;
 }
 
@@ -118,33 +117,37 @@ font-family: $base-font !important;
     font-weight: 700;
 }
 
-td a {
-   display: block;
-   padding: 4px;
+
+td {
+    a {
+        display: block;
+        padding: 4px;
+    }
+
+    &.person {
+        text-align:left;
+    }
 }
 
-td .person {
-    text-align:left;
-}
-
-span.records {
-    background-color: rgb(29, 112, 184);
-    font-weight: 700;
-    text-transform: uppercase;
-    display: inline-block;
-    padding: 1px 8px 1px;
-    outline: transparent solid 2px;
-    color: rgb(255,255,255);
-}
-
-span.norecords {
-    background-color: rgb(112, 112, 112);
-    font-weight: 700;
-    text-transform: uppercase;
-    display: inline-block;
-    padding: 1px 8px 1px;
-    outline: transparent solid 2px;
-    color: rgb(255,255,255);
+span {
+    &.records {
+        background-color: $secondary-background;
+        font-weight: 700;
+        text-transform: uppercase;
+        display: inline-block;
+        padding: 1px 8px 1px;
+        outline: transparent solid 2px;
+        color: $secondary-text;
+    }
+    &.norecords {
+        background-color: $gray;
+        font-weight: 700;
+        text-transform: uppercase;
+        display: inline-block;
+        padding: 1px 8px 1px;
+        outline: transparent solid 2px;
+        color: $secondary-text;
+    }
 }
 
 .service-row {

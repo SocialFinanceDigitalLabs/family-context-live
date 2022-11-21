@@ -26,11 +26,11 @@
 {% block javascript %}
     <script>
         function fetchServiceRecords(service_id, person_id) {
-            if((service_id===null || service_id==="") || (person_id===null || person_id==="")){
+            if(!service_id || !person_id){
                 return;
             }
             var current = $('#'+service_id+'-records').html();
-            if (current == "") {
+            if (current === "") {
                 var request = $.ajax({
                     type: "GET",
                     url: "{% url 'get_service_records' person_id=person.id service_id=9999 %}".replace(/9999/,service_id.toString()),
