@@ -10,8 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
+import dj_database_url
+import django_heroku
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -76,8 +79,12 @@ TEMPLATES = [
 WSGI_APPLICATION = "family_context.wsgi.application"
 
 STATICFILES_DIRS = [
-    BASE_DIR / "frontend/build",
+    os.path.join(BASE_DIR, "frontend/build"),
 ]
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 WEBPACK_LOADER = {
     "MANIFEST_FILE": BASE_DIR / "frontend/build/manifest.json",
@@ -96,6 +103,15 @@ DATABASES = {
         "PORT": config("SQL_PORT"),
     }
 }
+
+database_url = config("DATABASE_URL", default=False)
+MAX_CONN_AGE = 600
+
+if database_url:
+    # Configure Django for DATABASE_URL environment variable.
+    DATABASES["default"] = dj_database_url.config(
+        conn_max_age=MAX_CONN_AGE, ssl_require=True
+    )
 
 
 # Password validation
@@ -141,3 +157,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+django_heroku.settings(locals())
