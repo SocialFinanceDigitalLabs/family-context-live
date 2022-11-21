@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from faker import Faker
 
 from core.models import Gender
@@ -18,3 +20,7 @@ def get_first_name_from_gender(gender):
         raise ValueError("Input gender must be male, female, or non-binary.")
 
     return first_name
+
+
+def age_from_birth_date(date_of_birth):
+    return int((datetime.now().date() - date_of_birth).days / 365.25)

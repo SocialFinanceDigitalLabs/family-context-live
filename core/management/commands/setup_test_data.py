@@ -3,7 +3,8 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 
 from core.factories.person import ChildFactory
-from core.models import Person
+from core.factories.service import create_services
+from core.models import AdultSocialCare, Housing, Person, Police, School, ServiceSummary
 
 
 class Command(BaseCommand):
@@ -16,11 +17,14 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         number_of_children = kwargs["number_of_children"]
         self.stdout.write("Deleting old data...")
-        models = [Person]
+        models = [Person, Housing, School, AdultSocialCare, Police, ServiceSummary]
         for m in models:
             m.objects.all().delete()
 
         self.stdout.write("Creating new data...")
+
+        # Create the services
+        create_services()
 
         # Create all the users
         people = []

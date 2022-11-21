@@ -4,10 +4,13 @@ from datetime import datetime
 import factory
 from factory.django import DjangoModelFactory
 
-from core.models import School, ServiceInvolvement
+from core.models import School, ServiceInvolvement, ServiceSummary
 
 
 class SchoolFactory(DjangoModelFactory):
+    service = factory.LazyAttribute(
+        lambda o: ServiceSummary.objects.filter(title="School").first()
+    )
     name_prefix = factory.Faker("company")
     service_involvement = factory.LazyAttribute(
         lambda o: random.choices(ServiceInvolvement.choices)[0][0]
