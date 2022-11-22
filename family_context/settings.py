@@ -56,6 +56,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "family_context.urls"
@@ -78,13 +79,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "family_context.wsgi.application"
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+DEBUG_PROPAGATE_EXCEPTIONS = True
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "frontend/build"),
+    os.path.join(BASE_DIR, "family_context/static"),
 ]
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 WEBPACK_LOADER = {
     "MANIFEST_FILE": BASE_DIR / "frontend/build/manifest.json",
