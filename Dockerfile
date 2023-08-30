@@ -10,4 +10,4 @@ WORKDIR /code
 COPY . /code
 RUN pip3 install poetry
 RUN poetry config virtualenvs.create false
-RUN poetry install -n --no-ansi
+RUN poetry install -n --no-ansi --no-interaction -vvv
