@@ -31,9 +31,8 @@ RUN apt-get update && apt-get install -y ca-certificates gcc \
     musl-dev libffi-dev musl-dev g++ npm libpq-dev python-psycopg2
 
 # Install needed libraries, but disable environments
-RUN pip install --upgrade pip
-RUN pip install --no-input poetry
-RUN poetry export --without-hashes --format=requirements.txt > requirements.txt
+RUN pip install --upgrade pip && pip install --no-input poetry && \
+    poetry export --without-hashes --format=requirements.txt > requirements.txt
 
 # build wheel
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /code/dist -r requirements.txt
@@ -56,8 +55,7 @@ WORKDIR /code
 
 COPY --from=builder /code/dist /dist
 COPY --from=builder /code/pyproject.toml .
-RUN pip install --upgrade pip
-RUN pip install --no-cache /dist/*
+RUN pip install --upgrade pip && pip install --no-cache /dist/*
 
 # Copy project files
 COPY . /code
