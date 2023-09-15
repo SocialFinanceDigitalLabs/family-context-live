@@ -67,5 +67,7 @@ COPY --from=fe /code/frontend/build /code/frontend/build/
 # chown all the files to the app user
 RUN chown -R app:app /code
 
+RUN python manage.py collectstatic --noinput
+
 # change to the app user
 USER app
