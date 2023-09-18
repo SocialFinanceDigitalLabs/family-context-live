@@ -80,6 +80,8 @@ TEMPLATES = [
 WSGI_APPLICATION = "family_context.wsgi.application"
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+WHITENOISE_MANIFEST_STRICT = False
+
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 STATICFILES_DIRS = [

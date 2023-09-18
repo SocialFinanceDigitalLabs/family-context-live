@@ -53,16 +53,16 @@ RUN addgroup --system app && adduser --system --group app
 # create the appropriate directories
 WORKDIR /code
 
+# Copy project files
+COPY . /code
+
+# COPY BE libraries
 COPY --from=builder /code/dist /dist
 COPY --from=builder /code/pyproject.toml .
 RUN pip install --upgrade pip && pip install --no-cache /dist/*
 
-# Copy project files
-COPY . /code
-
 # Copy FE build
-COPY --from=fe /code/frontend /code/frontend/
-COPY --from=fe /code/frontend/build /code/frontend/build/
+COPY --from=fe /code/frontend/build /code/frontend/build
 
 # chown all the files to the app user
 RUN chown -R app:app /code
