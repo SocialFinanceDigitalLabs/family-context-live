@@ -66,7 +66,7 @@ Navigate to [localhost](http://127.0.0.1:8000) on port 8000 to connect to the fr
 #### Docker Compose NGINX Version
 A slightly more detailed setup that allows for caching of static files and also injection of 
 any SSL certificates. This will require more setup to enable though! There are two configurations
-for nginx available: http only (use the nginx.no-ssl.conf file) or https only (use the default nginx.conf file).
+for nginx available: http only (use the nginx.conf file) or https only (use the nginx.ssl.conf file).
 Any SSL certificates need to go into the ./nginx/certs folder. Refer to the [documentation 
 there](./nginx/certs/README.md) for more details.
 

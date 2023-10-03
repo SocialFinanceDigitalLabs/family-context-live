@@ -26,5 +26,4 @@ docker compose -f docker-compose.prod.yaml up
 This configuration will allow you to put your own certificate into the setup,
 but be aware that if a certificate expires, a new one will need to be put
 into the system and the service restarted (and possibly any cached certificates
-cleared).  For a more automated approach, see the `docker-compose.prod.certbot.yaml`
-file.
+cleared).  Look into using [certbot](https://certbot.eff.org/) to automate this process
