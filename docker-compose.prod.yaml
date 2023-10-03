@@ -3,12 +3,16 @@ services:
   web:
     image: mathewpugh/family-context:latest
     command: gunicorn family_context.wsgi:application --bind 0.0.0.0:8000
-    ports:
-      - "8000:8000"
+    volumes:
+      - static_volume:/code/static
+    expose:
+      - 8000
     env_file:
       - ./.env
     depends_on:
       - db
+    networks:
+      - fc-network
 
   db:
     image: postgres:alpine
@@ -21,3 +25,25 @@ services:
     command: "-p ${SQL_PORT}"
     env_file:
       - ./.env
+    networks:
+      - fc-network
+
+  nginx-proxy:
+    build: ./nginx
+    volumes:
+      - static_volume:/code/static
+      - ./nginx/certs:/etc/nginx/certs:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+    networks:
+      - fc-network
+
+networks:
+  fc-network:
+    driver: bridge
+
+volumes:
+  static_volume:
