@@ -21,8 +21,7 @@
   "bugs": {
     "url": "https://github.com/AccordBox/python-webpack-boilerplate/issues"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
     "core-js": "^3.20.3",
     "materialize-css": "^1.0.0",

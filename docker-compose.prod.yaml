@@ -21,7 +21,7 @@ services:
     expose:
       - "${SQL_PORT}"
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./data/db_dev:/var/lib/postgresql/data
     command: "-p ${SQL_PORT}"
     env_file:
       - ./.env

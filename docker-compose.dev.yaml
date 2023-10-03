@@ -14,8 +14,13 @@ services:
       - db
 
   db:
-    image: postgres
+    image: postgres:alpine
+    ports:
+      - "${SQL_PORT}:${SQL_PORT}"
+    expose:
+      - "${SQL_PORT}"
     volumes:
       - ./data/db:/var/lib/postgresql/data
+    command: "-p ${SQL_PORT}"
     env_file:
       - ./.env
