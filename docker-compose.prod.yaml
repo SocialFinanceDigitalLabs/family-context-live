@@ -40,6 +40,8 @@ services:
       - web
     networks:
       - fc-network
+    env_file:
+      - ./.env
 
 networks:
   fc-network:
