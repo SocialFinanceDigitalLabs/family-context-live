@@ -140,15 +140,14 @@ WEBPACK_LOADER = {
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+MAX_CONN_AGE = 600
+
 DATABASES = {
-    "default": {
-        "ENGINE": config("SQL_ENGINE"),
-        "NAME": config("SQL_DATABASE"),
-        "USER": config("SQL_USER"),
-        "PASSWORD": config("SQL_PASSWORD"),
-        "HOST": config("SQL_HOST"),
-        "PORT": config("SQL_PORT"),
-    }
+    "default": dj_database_url.config(
+        default=config("DATABASE_URL", f"sqlite:///{BASE_DIR}/db.sqlite3"),
+        conn_max_age=MAX_CONN_AGE,
+        ssl_require=False,
+    ),
 }
 
 database_url = config("DATABASE_URL", default=False)
