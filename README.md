@@ -41,8 +41,9 @@ locally and the service easily able to update when changes are made.
    3. `poetry run python manage.py migrate` to setup the database
 2. Build the front end 
    1. `cd frontend`
-   2. `npm install`
-   3. `npm run build`
+   2. `npm install` to install the required libraries
+   3. `npm run build` to build the static files
+   4. `cd ..` to return to the root directory
 3. Run the service
    1. `poetry run python manage.py collectstatic` This pulls the static files into a central location so the
    application can use them
