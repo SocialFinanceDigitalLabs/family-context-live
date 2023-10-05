@@ -1,0 +1,51 @@
+version: '3.10'
+services:
+  web:
+    image: mathewpugh/family-context:latest
+    command: gunicorn family_context.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/code/static
+    expose:
+      - 8000
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+    networks:
+      - fc-network
+
+  db:
+    image: postgres:alpine
+    ports:
+      - "${SQL_PORT}:${SQL_PORT}"
+    expose:
+      - "${SQL_PORT}"
+    volumes:
+      - ./data/db_dev:/var/lib/postgresql/data
+    command: "-p ${SQL_PORT}"
+    env_file:
+      - ./.env
+    networks:
+      - fc-network
+
+  nginx-proxy:
+    build: ./nginx
+    volumes:
+      - static_volume:/code/static
+      - ./nginx/certs:/etc/nginx/certs:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+    networks:
+      - fc-network
+    env_file:
+      - ./.env
+
+networks:
+  fc-network:
+    driver: bridge
+
+volumes:
+  static_volume:

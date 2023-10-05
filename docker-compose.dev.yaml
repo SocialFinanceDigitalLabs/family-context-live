@@ -8,18 +8,19 @@ services:
       - 8000:8000
     volumes:
       - .:/code
-    environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - ./.env
     depends_on:
       - db
 
   db:
-    image: postgres
+    image: postgres:alpine
+    ports:
+      - "${SQL_PORT}:${SQL_PORT}"
+    expose:
+      - "${SQL_PORT}"
     volumes:
       - ./data/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    command: "-p ${SQL_PORT}"
+    env_file:
+      - ./.env
