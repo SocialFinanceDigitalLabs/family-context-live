@@ -72,6 +72,9 @@ records in order to test.
 
 Run `docker compose -f docker-compose.dev.yaml down` in order to shut down the database and website.
 
+## SSO setup
+For cognito, be sure to set the 
+
 ### Fake Data
 To generate fake data, simply connect to the web docker image, and run the following command:
 `poetry run python manage.py setup_test_data`. Each time you run this, it will delete all Family 

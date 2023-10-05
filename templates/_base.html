@@ -1,8 +1,12 @@
+{% load i18n %}
 {% load webpack_loader static %}
-<html lang="en">
-<head>
-    <title>Family Context</title>
-    <meta
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block head_title %}{% endblock head_title %}</title>
+ <meta
     name="description"
     content="Family Context is a tool that allows social workers to easily access service involvement information on relevant individuals to a child."
     />
@@ -39,19 +43,21 @@
     crossorigin="anonymous"
     ></script>
     {% stylesheet_pack 'app' %}
-</head>
-<body
+    {% block extra_head %}
+    {% endblock extra_head %}
+  </head>
+  <body
     class="bg-white font-sans leading-normal text-grey-800"
->
+  >
     <nav class="fc-nav">
         <div class="nav-wrapper">
             <a href="/" class="brand-logo fc-logo">Family Context</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
                     {% if user.is_authenticated %}
-                        <a href="{% url 'logout' %}">Log Out</a>
+                        <a href="{% url 'account_logout' %}">Log Out</a>
                     {% else %}
-                        <a href="{% url 'login' %}">Sign In</a>
+                        <a href="{% url 'account_login' %}">Sign In</a>
                     {% endif %}
                 </li>
             </ul>
@@ -67,10 +73,27 @@
     </div>
     <hr />
     <div class="container">
-        {% block content %}{% endblock %}
+      {% block body %}
+
+      {% if messages %}
     </div>
+    <div>
+      <strong>{% trans "Messages:" %}</strong>
+      <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock content %}
+    {% endblock body %}
+    {% block extra_body %}
+    {% endblock extra_body %}
     {% javascript_pack 'app' attrs='charset="UTF-8"' %}
     {% block javascript %}
     {% endblock javascript %}
-</body>
+  </body>
 </html>
