@@ -101,7 +101,10 @@ else:
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["family_context/templates"],
+        "DIRS": [
+            os.path.join(BASE_DIR, "family_context/templates"),
+            os.path.join(BASE_DIR, "templates")
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
