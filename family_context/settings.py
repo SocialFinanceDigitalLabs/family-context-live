@@ -149,17 +149,13 @@ WEBPACK_LOADER = {
 MAX_CONN_AGE = 600
 
 # Database Settings
-try:
-    DATABASES = {
-        "default": dj_database_url.config(
-            default=config("DATABASE_URL", default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
-            conn_max_age=MAX_CONN_AGE,
-            ssl_require=False,
-        ),
-    }
-except Exception as err:
-    print(config("DATABASE_URL"))
-    raise
+DATABASES = {
+    "default": dj_database_url.config(
+        default=config("DATABASE_URL", default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
+        conn_max_age=MAX_CONN_AGE,
+        ssl_require=False,
+    ),
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
