@@ -32,6 +32,10 @@ ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")], default=[]
 )
 
+CSRF_TRUSTED_ORIGINS = config(
+    "TRUSTED_ORIGINS", cast=lambda v: [s.strip() for s in v.split(",")], default=[]
+)
+
 
 # Application definition
 
@@ -71,6 +75,8 @@ SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = "none"
 LOGIN_REDIRECT_URL = "home"
 ACCOUNT_LOGOUT_ON_GET = True
+
+# Cognito Settings
 COGNITO_DOMAIN = config("AWS_COGNITO_DOMAIN", default=False)
 AWS_REGION = config("AWS_REGION", default=False)
 COGNITO_CLIENT_ID = config("AWS_COGNITO_APP_CLIENT_ID", default=False)
@@ -137,31 +143,23 @@ WEBPACK_LOADER = {
     "MANIFEST_FILE": BASE_DIR / "frontend/build/manifest.json",
 }
 
-
-
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 MAX_CONN_AGE = 600
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=config("DATABASE_URL", f"sqlite:///{BASE_DIR}/db.sqlite3"),
-        conn_max_age=MAX_CONN_AGE,
-        ssl_require=False,
-    ),
-}
-
-database_url = config("DATABASE_URL", default=False)
-MAX_CONN_AGE = 600
-
-if database_url:
-    # Configure Django for DATABASE_URL environment variable.
-    DATABASES["default"] = dj_database_url.config(
-        conn_max_age=MAX_CONN_AGE, ssl_require=True
-    )
-
+# Database Settings
+try:
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=config("DATABASE_URL", default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
+            conn_max_age=MAX_CONN_AGE,
+            ssl_require=False,
+        ),
+    }
+except Exception as err:
+    print(config("DATABASE_URL"))
+    raise
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

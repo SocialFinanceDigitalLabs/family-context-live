@@ -21,6 +21,6 @@ services:
       - "${SQL_PORT}"
     volumes:
       - ./data/db:/var/lib/postgresql/data
-    command: "-p ${SQL_PORT}"
+    command: -p ${SQL_PORT}
     env_file:
       - ./.env
