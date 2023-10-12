@@ -4,6 +4,28 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+class Person(models.Model):
+    last_name = models.CharField(max_length=70, blank=True, null=True)
+    first_name = models.CharField(max_length=70, blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    address = models.CharField(max_length=256, blank=True, null=True)
+    age = models.IntegerField(blank=True, null=True)
+    nhs_number = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.last_name
+    
+class DataSource(models.Model):
+    name = models.CharField(max_length=70, blank=True, null=True)
+    last_update = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+    
+class Record(models.Model):
+    person_id = models.ForeignKey(Person, on_delete=models.CASCADE)
+    datasource_id = models.ForeignKey(DataSource, on_delete=models.CASCADE)
+    record = models.JSONField()
 
 class ServiceInvolvementMetadataMixin(models.Model):
     start_date_of_last_involvement = models.DateField()
@@ -14,22 +36,6 @@ class ServiceInvolvementMetadataMixin(models.Model):
 
     class Meta:
         abstract = True
-
-
-class Gender(models.TextChoices):
-    MALE = (
-        "M",
-        _("Male"),
-    )
-    FEMALE = (
-        "F",
-        _("Female"),
-    )
-    OTHER = (
-        "O",
-        _("Other"),
-    )
-    NOT_SPECIFIED = "U", _("Not Specified")
 
 
 class RelationshipType(models.TextChoices):
@@ -58,37 +64,18 @@ class Contact(models.Model):
     other = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
 
 
-class Person(models.Model):
-    cms_id = models.CharField(max_length=50, blank=True, null=True)
-    first_name = models.CharField(max_length=70, blank=True, null=True)
-    last_name = models.CharField(max_length=70, blank=True, null=True)
-    date_of_birth = models.DateField(blank=True, null=True)
-    gender = models.CharField(
-        max_length=7, choices=Gender.choices, default=Gender.NOT_SPECIFIED
-    )
-    address = models.CharField(max_length=256, blank=True, null=True)
-    other_fields = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
-    relation = models.ManyToManyField(
-        "self", through="PersonRelationship", through_fields=("person", "relation")
-    )
-
-    @property
-    def age(self):
-        return int((datetime.now().date() - self.date_of_birth).days / 365.25)
-
-
-class PersonRelationship(models.Model):
-    person = models.ForeignKey(
-        "Person", on_delete=models.CASCADE, related_name="relationships"
-    )
-    relation = models.ForeignKey(
-        "Person", on_delete=models.CASCADE, related_name="reverse_relationships"
-    )
-    relation_type = models.CharField(
-        max_length=15,
-        choices=RelationshipType.choices,
-        default=RelationshipType.NOT_SPECIFIED,
-    )
+# class PersonRelationship(models.Model):
+#     person = models.ForeignKey(
+#         "Person", on_delete=models.CASCADE, related_name="relationships"
+#     )
+#     relation = models.ForeignKey(
+#         "Person", on_delete=models.CASCADE, related_name="reverse_relationships"
+#     )
+#     relation_type = models.CharField(
+#         max_length=15,
+#         choices=RelationshipType.choices,
+#         default=RelationshipType.NOT_SPECIFIED,
+#     )
 
 
 class ServiceSummary(models.Model):
