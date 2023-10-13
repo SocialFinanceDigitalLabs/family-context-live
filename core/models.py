@@ -1,8 +1,7 @@
-from datetime import datetime
-
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
 
 class Person(models.Model):
     last_name = models.CharField(max_length=70, blank=True, null=True)
@@ -14,18 +13,21 @@ class Person(models.Model):
 
     def __str__(self):
         return self.last_name
-    
+
+
 class DataSource(models.Model):
     name = models.CharField(max_length=70, blank=True, null=True)
     last_update = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.name
-    
+
+
 class Record(models.Model):
     person_id = models.ForeignKey(Person, on_delete=models.CASCADE)
     datasource_id = models.ForeignKey(DataSource, on_delete=models.CASCADE)
     record = models.JSONField()
+
 
 class ServiceInvolvementMetadataMixin(models.Model):
     start_date_of_last_involvement = models.DateField()
