@@ -112,7 +112,7 @@ class Command(BaseCommand):
         # First, delete existing data sets
         self.clear_fixtures_folder()
 
-        # Second, loop over the number of people expected to genrate
+        # Second, loop over the number of people expected to generate
         for _ in range(person_count):
             p = Person()
 
@@ -158,10 +158,9 @@ class Command(BaseCommand):
         try:
             with open(structure_file_path, "r") as structure_file:
                 structure_data = yaml.safe_load(structure_file)
-                print(structure_data)
             common_fields = structure_data["COMMON_FIELD_NAMES"]
             data_sets = structure_data["DataTypes"]
-        except Exception as err:
+        except FileNotFoundError as err:
             self.stderr.write(
                 f"Problem opening the YAML structure file: {structure_file_path}"
             )
@@ -197,5 +196,5 @@ class Command(BaseCommand):
                 if filename.endswith(".csv"):
                     file_path = os.path.join(BASE_FIXTURES_DIR, filename)
                     os.remove(file_path)
-        except OSError as e:
-            self.stderr.write(f"Error: {e}")
+        except OSError as err:
+            self.stderr.write(f"Error: {err}")
