@@ -162,8 +162,11 @@ class Command(BaseCommand):
             data_sets = structure_data["DataTypes"]
         except FileNotFoundError as err:
             self.stderr.write(
-                f"Problem opening the YAML structure file: {structure_file_path}"
+                f"Problem opening the YAML structure file {structure_file_path}: {err}"
             )
+            return None, None
+        except yaml.YAMLError as err:
+            self.stderr.write(f"Problem parsing YAML file: {err}")
             return None, None
 
         return common_fields, data_sets
