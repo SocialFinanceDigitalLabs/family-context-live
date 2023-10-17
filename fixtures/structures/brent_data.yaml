@@ -1,0 +1,78 @@
+COMMON_FIELD_NAMES:
+  - "Last Name"
+  - "First Name"
+  - "Date of Birth"
+  - "Age"
+  - "NHS No"
+  - "Address"
+
+DataTypes:
+  - ASC:
+    _Data_type: "ASC.csv"
+    fields:
+      Date of death: "Date"
+      CMS No: "Numeric"
+      Keyworker: "FullName"
+      Email: "Email"
+      Is a Carer: "Boolean"
+      No of Carers: "Numeric"
+      Service Event Desc: "String"
+      Service Event Start: "Date"
+      Service Event End: "Date"
+  - CSC:
+    _Data_type: "CSC.csv"
+    fields:
+      Date of death: "Date"
+      CMS No: "Numeric"
+      Keyworker: "String"
+      Email: "Email"
+      Is a Carer: "Boolean"
+      No of Carers: "Numeric"
+      Service/Event Desc: "String"
+      Service/Event Start: "Date"
+      Service/Event End: "Date"
+  - HOUSING:
+    _Data_type: "housing.csv"
+    fields:
+      Date of death: "Date"
+      CMS No: "Numeric"
+      Name of housing officer: "String"
+      Supported housing: "Boolean"
+      Social housing: "Boolean"
+      Name of housing provider: "String"
+      Service/Event Desc: "String"
+      Service/Event Start: "Date"
+      Service/Event End: "Date"
+  - COMMUNITY:
+    _Data_type: "community.csv"
+    fields:
+      Date of death: "Date"
+      Service/Event Desc: "String"
+      Service/Event Start: "Date"
+      Service/Event End: "Date"
+  - ACUTE:
+    _Data_type: "acute.csv"
+    fields:
+      Date of death: "Date"
+      CMS No: "Numeric"
+      Date of most recent hospital admission: "Date"
+      Date of discharge: "Date"
+      Presenting condition: "String"
+      Count of admissions over 12 month period: "Numeric"
+      High intensity A+E user: "Boolean"
+      Next of kin name: "String"
+      Next of kin contact details: "Numeric"
+  - PRIMARY:
+    _Data_type: "primary.csv"
+    fields:
+      Date of death: "Date"
+      Name of GP: "FullName"
+      Contact number: "Numeric"
+      Date registered: "Date"
+  - MENTAL_HEALTH:
+    _Data_type: "mental_health.csv"
+    fields:
+      Date of death: "Date"
+      Service/Event Desc: "String"
+      Service/Event Start: "Date"
+      Service/Event End: "Date"
