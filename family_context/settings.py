@@ -74,7 +74,9 @@ ACCOUNT_LOGOUT_ON_GET = True
 COGNITO_DOMAIN = config("AWS_COGNITO_DOMAIN", default=False, cast=bool)
 AWS_REGION = config("AWS_REGION", default=False, cast=bool)
 COGNITO_CLIENT_ID = config("AWS_COGNITO_APP_CLIENT_ID", default=False, cast=bool)
-COGNITO_CLIENT_SECRET = config("AWS_COGNITO_APP_CLIENT_SECRET", default=False, cast=bool)
+COGNITO_CLIENT_SECRET = config(
+    "AWS_COGNITO_APP_CLIENT_SECRET", default=False, cast=bool
+)
 
 if COGNITO_DOMAIN and AWS_REGION and COGNITO_CLIENT_ID and COGNITO_CLIENT_SECRET:
     SOCIALACCOUNT_PROVIDERS = {
@@ -84,9 +86,7 @@ if COGNITO_DOMAIN and AWS_REGION and COGNITO_CLIENT_ID and COGNITO_CLIENT_SECRET
                 "secret": COGNITO_CLIENT_SECRET,
             },
             "SCOPE": {"aws.cognito.signin.user.admin", "openid", "email"},
-            "DOMAIN": "https://{}.auth.{}.amazoncognito.com".format(
-                COGNITO_DOMAIN, AWS_REGION
-            ),
+            "DOMAIN": COGNITO_DOMAIN,
         }
     }
     AUTHENTICATION_BACKENDS = (
@@ -94,16 +94,14 @@ if COGNITO_DOMAIN and AWS_REGION and COGNITO_CLIENT_ID and COGNITO_CLIENT_SECRET
         "allauth.account.auth_backends.AuthenticationBackend",
     )
 else:
-    AUTHENTICATION_BACKENDS = (
-        "django.contrib.auth.backends.ModelBackend",
-    )
+    AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             os.path.join(BASE_DIR, "family_context/templates"),
-            os.path.join(BASE_DIR, "templates")
+            os.path.join(BASE_DIR, "templates"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -136,8 +134,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 WEBPACK_LOADER = {
     "MANIFEST_FILE": BASE_DIR / "frontend/build/manifest.json",
 }
-
-
 
 
 # Database
