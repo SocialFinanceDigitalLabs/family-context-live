@@ -8,7 +8,7 @@ from django.urls import reverse
 
 from .forms import CmsIdForm, NameSearchForm
 from .helpers.shared import find_service_involvement_count
-from .models import Person, ServiceSummary
+from .models import Person
 
 
 def index(request):
@@ -108,14 +108,14 @@ def case_id_search(request):
 def person(request, person_id):
     p = Person.objects.get(id=person_id)
     relation_count = len(p.relationships.all()) + len(p.reverse_relationships.all())
-    s = ServiceSummary.objects.all()
-    for service in s:
-        service.records = find_service_involvement_count(service, p)
+    #s = ServiceSummary.objects.all()
+    #for service in s:
+    #    service.records = find_service_involvement_count(service, p)
 
     return render(
         request,
         "person.html",
-        {"person": p, "relation_count": relation_count, "service_list": s},
+        {"person": p, "relation_count": relation_count},
     )
 
 
@@ -124,9 +124,10 @@ def get_service_records(request, person_id, service_id):
     is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
     if is_ajax:
         if request.method == "GET":
-            service_record = ServiceSummary.objects.get(id=service_id)
+            #service_record = ServiceSummary.objects.get(id=service_id)
             person = Person.objects.filter(id=person_id).first()
 
+            '''
             records = [
                 service_record.service_adult_social_care_records.filter(
                     person=person
@@ -175,11 +176,11 @@ def get_service_records(request, person_id, service_id):
                 service_record.service_police_records.filter(person=person).values(
                     "police_area", "contact", "other"
                 ),
-            ]
+            ]'''
 
             html = render_to_string(
                 "person_service_records.html",
-                {"service": service_record, "records": records},
+                #{"service": service_record, "records": records},
             )
             html = html.replace("\n", "").replace('"', "")
             return JsonResponse(html, safe=False)
