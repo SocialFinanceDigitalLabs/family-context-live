@@ -32,6 +32,10 @@ ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")], default=[]
 )
 
+CSRF_TRUSTED_ORIGINS = config(
+    "TRUSTED_ORIGINS", cast=lambda v: [s.strip() for s in v.split(",")], default=[]
+)
+
 
 # Application definition
 
@@ -71,11 +75,11 @@ SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = "none"
 LOGIN_REDIRECT_URL = "home"
 ACCOUNT_LOGOUT_ON_GET = True
-COGNITO_DOMAIN = config("AWS_COGNITO_DOMAIN", default=False, cast=bool)
-AWS_REGION = config("AWS_REGION", default=False, cast=bool)
-COGNITO_CLIENT_ID = config("AWS_COGNITO_APP_CLIENT_ID", default=False, cast=bool)
+COGNITO_DOMAIN = config("AWS_COGNITO_DOMAIN", default=False)
+AWS_REGION = config("AWS_REGION", default=False)
+COGNITO_CLIENT_ID = config("AWS_COGNITO_APP_CLIENT_ID", default=False)
 COGNITO_CLIENT_SECRET = config(
-    "AWS_COGNITO_APP_CLIENT_SECRET", default=False, cast=bool
+    "AWS_COGNITO_APP_CLIENT_SECRET", default=False
 )
 
 if COGNITO_DOMAIN and AWS_REGION and COGNITO_CLIENT_ID and COGNITO_CLIENT_SECRET:
