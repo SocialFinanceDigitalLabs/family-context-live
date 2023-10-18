@@ -27,3 +27,6 @@ class Record(models.Model):
     person_id = models.ForeignKey(Person, on_delete=models.CASCADE)
     datasource_id = models.ForeignKey(DataSource, on_delete=models.CASCADE)
     record = models.JSONField()
+
+    def __str__(self):
+        return self.record

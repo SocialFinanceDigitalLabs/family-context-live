@@ -1,3 +1,4 @@
+import json
 import pandas as pd
 from django.core.management.base import BaseCommand, CommandParser
 from django.utils import timezone
@@ -34,9 +35,11 @@ class Command(BaseCommand):
             "age",
             "nhs_number",
         ]
-        json_records = data[data.columns.difference(person_cols)].to_json(
-            orient="records"
-        )
+        
+        # store non-id data as json.        
+        record_df = data[data.columns.difference(person_cols)]
+        json_records = [json.dumps(row) for row in record_df.to_dict("records")]
+
 
         datasource = DataSource.objects.create(
             name=filename,
