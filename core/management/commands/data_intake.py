@@ -11,19 +11,10 @@ class Command(BaseCommand):
     def add_arguments(self, parser: CommandParser) -> None:
         parser.add_argument("files", nargs="+", type=str)
 
-    def update_db(self, file) -> None:
+    def update_db(self, file, cols_as_expected) -> None:
         data = pd.read_csv(file)
         filename = file.split("\\")[-1].split(".")[0]
 
-        # standardise id column names
-        cols_as_expected = {
-            "Last Name": "last_name",
-            "First Name": "first_name",
-            "Date of Birth": "date_of_birth",
-            "Address": "address",
-            "Age": "age",
-            "NHS No": "nhs_number",
-        }
         data.rename(columns=cols_as_expected, inplace=True)
 
         # separate record data from person data
@@ -35,7 +26,7 @@ class Command(BaseCommand):
             "age",
             "nhs_number",
         ]
-        
+
         # store non-id data as json.        
         record_df = data[data.columns.difference(person_cols)]
         json_records = [json.dumps(row) for row in record_df.to_dict("records")]
@@ -65,8 +56,18 @@ class Command(BaseCommand):
         DataSource.objects.all().delete()
         Person.objects.all().delete()
 
+        # standardise id column names
+        cols_as_expected = {
+            "Last Name": "last_name",
+            "First Name": "first_name",
+            "Date of Birth": "date_of_birth",
+            "Address": "address",
+            "Age": "age",
+            "NHS No": "nhs_number",
+        }
+
         for file in kwargs["files"]:
-            self.update_db(file)
+            self.update_db(file, cols_as_expected)
         
         self.stdout.write(f"Records: {len(Record.objects.all())}")
         self.stdout.write(f"Persons: {len(Person.objects.all())}")
