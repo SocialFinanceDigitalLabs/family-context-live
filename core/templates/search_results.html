@@ -13,7 +13,7 @@
     <table class="responsive-table highlight">
         <thead>
             <tr>
-                <th>CMS ID</th>
+                <th>NHS Number</th>
                 <th>First Name</th>
                 <th>Family Name</th>
                 <th>Date of Birth</th>
@@ -24,7 +24,7 @@
         <tbody>
     {% for result in results %}
             <tr>
-                <td><a href="{% url 'person' person_id=result.id %}">{{ result.cms_id}}</a></td>
+                <td><a href="{% url 'person' person_id=result.id %}">{{ result.nhs_number}}</a></td>
                 <td><a href="{% url 'person' person_id=result.id %}">{{ result.first_name}}</a></td>
                 <td><a href="{% url 'person' person_id=result.id %}">{{ result.last_name}}</a></td>
                 <td><a href="{% url 'person' person_id=result.id %}">{{ result.date_of_birth}}</a></td>

@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 
-from .forms import CmsIdForm, NameSearchForm
+from .forms import NHSIdForm, NameSearchForm
 from .helpers.shared import find_service_involvement_count
 from .models import Person
 
@@ -24,14 +24,12 @@ def login(request):
 @login_required()
 def search(request):
     name_form = NameSearchForm()
-    cms_form = CmsIdForm()
+    nhs_form = NHSIdForm()
     return render(
         request,
         "search.html",
-        {"name_form": name_form, "sub": "search", "cms_form": cms_form},
+        {"name_form": name_form, "sub": "search", "nhs_form": nhs_form},
     )
-
-    return render(request, "search.html")
 
 
 @login_required()
@@ -82,24 +80,24 @@ def name_search(request):
 @login_required()
 def case_id_search(request):
     if request.method == "POST":
-        form = CmsIdForm(request.POST)
+        form = NHSIdForm(request.POST)
         if form.is_valid():
-            cms_id = form.cleaned_data["cms_id"]
-            results = Person.objects.filter(cms_id=cms_id)
+            nhs_number = form.cleaned_data["nhs_number"]
+            results = Person.objects.filter(nhs_number=nhs_number)
 
             if not results:
                 # Need to display error that record wasn't found...
-                form = CmsIdForm()
+                form = NHSIdForm()
             elif len(results) == 1:
                 return redirect(reverse("person", kwargs={"person_id": results[0].id}))
             else:
                 return render(
                     request,
                     "search_results.html",
-                    {"results": results, "terms": form.cleaned_data["cms_id"]},
+                    {"results": results, "terms": form.cleaned_data["nhs_number"]},
                 )
     else:
-        form = CmsIdForm()
+        form = NHSIdForm()
 
     return render(request, "search.html", {"form": form, "sub": "case_id_search"})
 
