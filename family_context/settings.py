@@ -33,7 +33,7 @@ ALLOWED_HOSTS = config(
 )
 
 CSRF_TRUSTED_ORIGINS = config(
-    "TRUSTED_ORIGINS", cast=lambda v: [s.strip() for s in v.split(",")], default=""
+    "TRUSTED_ORIGINS", cast=lambda v: [s.strip() for s in v.split(",")], default="https://127.0.0.1"
 )
 
 
