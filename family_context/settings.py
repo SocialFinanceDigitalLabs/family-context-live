@@ -29,11 +29,11 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")], default=[]
+    "ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")], default=""
 )
 
 CSRF_TRUSTED_ORIGINS = config(
-    "TRUSTED_ORIGINS", cast=lambda v: [s.strip() for s in v], default=[]
+    "TRUSTED_ORIGINS", cast=lambda v: [s.strip() for s in v.split(",")], default=""
 )
 
 
