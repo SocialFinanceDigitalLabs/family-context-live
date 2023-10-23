@@ -37,29 +37,11 @@ def name_search(request):
     if request.method == "POST":
         form = NameSearchForm(request.POST)
         if form.is_valid():
-            dob = form.cleaned_data["date_of_birth"]
-            if not dob:
-                results = (
-                    Person.objects.annotate(
-                        similarity=TrigramSimilarity(
-                            "first_name", form.cleaned_data["first_name"]
-                        )
-                        + TrigramSimilarity("last_name", form.cleaned_data["last_name"])
-                    )
-                    .filter(similarity__gt=0.5)
-                    .order_by("-similarity")
-                )
-            else:
-                results = (
-                    Person.objects.annotate(
-                        similarity=TrigramSimilarity(
-                            "first_name", form.cleaned_data["first_name"]
-                        )
-                        + TrigramSimilarity("last_name", form.cleaned_data["last_name"])
-                    )
-                    .filter(Q(similarity__gt=0.5) & Q(date_of_birth=dob))
-                    .order_by("-similarity")
-                )
+            results = Person.objects.filter(
+                Q(first_name__icontains=form.cleaned_data["first_name"])
+                | Q(last_name__icontains=form.cleaned_data["last_name"])
+                | Q(date_of_birth=form.cleaned_data["date_of_birth"])
+            )
 
             return render(
                 request,
