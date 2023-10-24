@@ -15,5 +15,5 @@ class NameSearchForm(forms.Form):
     )
 
 
-class CmsIdForm(forms.Form):
-    cms_id = forms.CharField(label="CMS ID", max_length=50)
+class NHSIdForm(forms.Form):
+    nhs_number = forms.CharField(label="NHS number", max_length=50)

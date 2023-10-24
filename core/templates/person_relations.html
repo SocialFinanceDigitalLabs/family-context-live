@@ -15,7 +15,7 @@
         <thead>
             <tr>
                 <th>Relationship</th>
-                <th>CMS ID</th>
+                <th>NHS number</th>
                 <th>First Name</th>
                 <th>Family Name</th>
                 <th>Date of Birth</th>
@@ -26,7 +26,7 @@
             {% for r in person.relationships.all %}
             <tr>
                 <td>{{r.relation_type}}</td>
-                <td>{{r.relation.cms_id}}</td>
+                <td>{{r.relation.nhs_number}}</td>
                 <td>{{r.relation.first_name}}</td>
                 <td>{{r.relation.last_name}}</td>
                 <td>{{r.relation.date_of_birth}}</td>
@@ -38,7 +38,7 @@
                 {% if r.relation_type == "Parent" %}
                     <td>Child</td>
                 {% endif %}
-                <td>{{r.person.cms_id}}</td>
+                <td>{{r.person.nhs_number}}</td>
                 <td>{{r.person.first_name}}</td>
                 <td>{{r.person.last_name}}</td>
                 <td>{{r.person.date_of_birth}}</td>
