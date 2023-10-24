@@ -5,25 +5,26 @@
     </div>
 </div>
 <div class="container">
-    {% for service in service_list %}
+    {% for data_source in data_sources %}
     <div class="divider"></div>
     <div class="row service-row valign-wrapper">
-        <div class="col s4 service-title">{{service.title}}</div>
-        {% if service.records > 0 %}
-        <div class="col s5 center-align"><span class="badge records"><i class="tiny material-icons">check</i>Records Found</span></div>
-        <div class="col s3 right-align"><a id="{{service.id}}-toggle" class="btn-small grey lighten-3 black-text" onCLick="fetchServiceRecords({{service.id}}, {{person.id}})">Show</a></div>
+        <div class="col s4 service-title">{{data_source.name}}</div>
+        {% if data_source.contains_person %}
+        <div class="col s5 center-align"><span class="badge records"><i class="tiny material-icons">check</i> Records Found</span></div>
+        <div class="col s3 right-align"><a id="{{data_source.id}}-toggle" class="btn-small grey lighten-3 black-text" ">View Records</a></div>
+        <!-- <div class="col s3 right-align"><a id="{{service.id}}-toggle" class="btn-small grey lighten-3 black-text" onCLick="fetchServiceRecords({{service.id}}, {{person.id}})">Show</a></div> -->
         {% else %}
-        <div class="col s5 center-align"><span class="badge norecords"><i class="tiny material-icons">clear</i>No Records Found</span></div>
+        <div class="col s5 center-align"><span class="badge norecords"><i class="tiny material-icons">clear</i> No Records Found</span></div>
         <div class="col s3 right-align"></div>
         {% endif %}
     </div>
     <div class="row">
-        <div id="{{service.id}}-records" class="container col s12"></div>
+        <div id="{{data_source.id}}-records" class="container col s12"></div>
     </div>
     {% endfor %}
 </div>
 
-{% block javascript %}
+<!-- {% block javascript %}
     <script>
         function fetchServiceRecords(service_id, person_id) {
             if(!service_id || !person_id){
@@ -48,4 +49,4 @@
 
         }
     </script>
-{% endblock javascript %}
+{% endblock javascript %} -->
