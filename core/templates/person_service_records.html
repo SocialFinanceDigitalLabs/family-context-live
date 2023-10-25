@@ -1,31 +1,33 @@
-<div>Information was last updated on {{service.last_synchronised}}</div>
-<div>Information comes from {{service.data_source}} and covers the period {{service.coverage_start_date}} to {{service.coverage_end_date}}</div>
-{% for source in records %}
-    {% for result in source %}
-        {% if result %}
+{% extends "core/index.html" %}
 
-        <table class="highlight">
-            <tr>
-                <th colspan="2">Result {{ forloop.counter }}</th>
-            </tr>
-            {% for key, value in result.items %}
-            <tr>
-                {% if key == "other" %}
-                <th>{{key}}</th>
-                <td>
-                    <ul>
-                        {% for other_key, other_value in value.items %}
-                            <li><b>{{other_key}}</b>: {{other_value}}</li>
-                        {% endfor %}
-                    </ul>
-                </td>
-                {% else %}
-                <th>{{key}}</th>
-                <td>{{value}}</td>
-                {% endif %}
-            </tr>
+{% block content %}
+
+{% include "page_nav.html" %}
+{% include "person_id_details.html" %}
+
+<h2>{{data_source.name}} records</h2>
+<h6>Information was last updated on {{data_source.last_update}}</h6>
+<br>
+
+<table>
+    <tr>
+        {% for record_dict in data_source.person_records %}
+        {% if forloop.first %}
+            {% for field, value in record_dict.items %}
+                
+                <th> {{field}} </th>
             {% endfor %}
-        </table>
         {% endif %}
+        {% endfor %}
+    </tr>
+
+    {% for record_dict in data_source.person_records %}
+        <tr>
+            {% for field, value in record_dict.items %}
+                <td>{{value}} </td>
+            {% endfor %}
+        </tr>
     {% endfor %}
-{% endfor %}
+    
+</table>
+{% endblock %}

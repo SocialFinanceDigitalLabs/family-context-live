@@ -1,13 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.http import HttpResponseBadRequest, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.template.loader import render_to_string
 from django.urls import reverse
 
 from .forms import NHSIdForm, NameSearchForm
 from .models import Person, DataSource, Record
 
+import json
 
 def index(request):
     if not request.user.is_authenticated:
@@ -101,72 +101,13 @@ def person(request, person_id):
 
 
 @login_required()
-def get_service_records(request, person_id, service_id):
-    is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
-    if is_ajax:
-        if request.method == "GET":
-            #service_record = ServiceSummary.objects.get(id=service_id)
-            person = Person.objects.filter(id=person_id).first()
+def get_service_records(request, person_id, datasource_id):
 
-            '''
-            records = [
-                service_record.service_adult_social_care_records.filter(
-                    person=person
-                ).values(
-                    "local_authority_organisation",
-                    "contact",
-                    "service_involvement",
-                    "start_date_of_last_involvement",
-                    "date_of_most_recent_interaction",
-                    "date_current_as_of",
-                    "coverage_start_date",
-                    "coverage_end_date",
-                    "coverage_geographic_area",
-                    "other",
-                ),
-                service_record.service_school_records.filter(person=person).values(
-                    "school_name",
-                    "contact_number",
-                    "admission_type",
-                    "service_involvement",
-                    "start_date_of_last_involvement",
-                    "date_of_most_recent_interaction",
-                    "date_current_as_of",
-                    "coverage_start_date",
-                    "coverage_end_date",
-                    "coverage_geographic_area",
-                    "other",
-                ),
-                service_record.service_housing_records.filter(person=person).values(
-                    "housing_association",
-                    "contact",
-                    "tenancy_start",
-                    "antisocial_behaviour",
-                    "rent_arrears",
-                    "notice_seeking_possession",
-                    "eviction",
-                    "service_involvement",
-                    "start_date_of_last_involvement",
-                    "date_of_most_recent_interaction",
-                    "date_current_as_of",
-                    "coverage_start_date",
-                    "coverage_end_date",
-                    "coverage_geographic_area",
-                    "other",
-                ),
-                service_record.service_police_records.filter(person=person).values(
-                    "police_area", "contact", "other"
-                ),
-            ]'''
+    person = Person.objects.get(id=person_id)
+    data_source = DataSource.objects.get(id=datasource_id)
 
-            html = render_to_string(
-                "person_service_records.html",
-                #{"service": service_record, "records": records},
-            )
-            html = html.replace("\n", "").replace('"', "")
-            return JsonResponse(html, safe=False)
-        else:
-            return JsonResponse({"status": "Invalid request"}, status=400)
+    # get service records for person as list[dict]
+    json_person_records = Record.objects.filter(person_id=person_id).filter(datasource_id=datasource_id)
+    data_source.person_records = [json.loads(record.record) for record in json_person_records]
 
-    else:
-        return HttpResponseBadRequest("Invalid request")
+    return render(request, "person_service_records.html", {"person":person, "data_source": data_source, "sub": "get_service_records"})
