@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.postgres.search import TrigramSimilarity
 from django.db.models import Q
 from django.http import HttpResponseBadRequest, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
@@ -7,8 +6,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 
 from .forms import NHSIdForm, NameSearchForm
-from .helpers.shared import find_service_involvement_count
-from .models import Person
+from .models import Person, DataSource, Record
 
 
 def index(request):
@@ -87,15 +85,18 @@ def case_id_search(request):
 @login_required()
 def person(request, person_id):
     p = Person.objects.get(id=person_id)
-    relation_count = len(p.relationships.all()) + len(p.reverse_relationships.all())
-    #s = ServiceSummary.objects.all()
-    #for service in s:
-    #    service.records = find_service_involvement_count(service, p)
+    data_sources = DataSource.objects.all()
+
+    # runtime attribute to indicate if service contains data about person.
+    for source in data_sources:
+        source.person_record = Record.objects.filter(person_id=person_id).filter(datasource_id=source.id)
+        source.contains_person = source.person_record.exists()
+    
 
     return render(
         request,
         "person.html",
-        {"person": p, "relation_count": relation_count},
+        {"person": p, "data_sources": data_sources,},
     )
 
 
