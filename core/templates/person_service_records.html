@@ -10,24 +10,13 @@
 <br>
 
 <table>
-    <tr>
-        {% for record_dict in data_source.person_records %}
-        {% if forloop.first %}
-            {% for field, value in record_dict.items %}
-                
-                <th> {{field}} </th>
-            {% endfor %}
-        {% endif %}
-        {% endfor %}
-    </tr>
-
     {% for record_dict in data_source.person_records %}
-        <tr>
-            {% for field, value in record_dict.items %}
+        {% for field, value in record_dict.items %}
+            <tr>
+                <th> {{field}} </th>
                 <td>{{value}} </td>
-            {% endfor %}
-        </tr>
-    {% endfor %}
-    
+            </tr>
+        {% endfor %}
+    {% endfor %}    
 </table>
 {% endblock %}
