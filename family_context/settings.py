@@ -36,6 +36,10 @@ CSRF_TRUSTED_ORIGINS = config(
     "TRUSTED_ORIGINS", cast=lambda v: [s.strip() for s in v.split(",")], default="https://127.0.0.1"
 )
 
+# Check if setting is set to allow this to run behind a load balancer
+LOAD_BALANCER_SSL = config("LOAD_BALANCER_SSL", default=False, cast=bool)
+if LOAD_BALANCER_SSL:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition
 
