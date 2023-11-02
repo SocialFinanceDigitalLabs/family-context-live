@@ -15,30 +15,19 @@ Description: |
   default to SQLite which is not ideal for a production
   environment. Some configuration will need to be done to
   connect to a database that is correct for your needs.
+  
+  - This isn't yet secure enough for a production environment 
+  and is here only for testing purposes
 
 Parameters:
   Environment:
     Type: String
     Default: staging
     Description: The name for the environment. Expected values are dev, staging, prod
-  WebsiteUrl:
-    Type: String
-    Description: The URL of the platform
   FrontendVpcCIDR:
     Type: String
     Default: 10.192.50.0/16
     Description: CIDR rule to use for the front end vpc
-  ProjectName:
-    Type: String
-    Default: fons
-    Description: Name of the platform. Used to name things like database, etc.
-  OrganisationName:
-    Description: The name of the organisation or la
-    Type: String
-  FrontendLaunchType:
-    Type: String
-    Default: "FARGATE"
-    Description: Either FARGATE or EC2 type can be used
   PublicSubnet1CIDR:
     Description: Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone
     Type: String
@@ -71,12 +60,6 @@ Parameters:
     Type: String
     Default: 512
     Description: Memory to use for the Frontend
-  DataStoreLocation:
-    Type: String
-    Description: Location the Frontend should look to save and load uploaded and processed files
-  DataStoreLocationArn:
-    Type: String
-    Description: Arn of the bucket which stores the uploaded and processed files
   SecretKey:
     Type: String
     Description: Secret Key to be used with Django setup
@@ -135,8 +118,7 @@ Resources:
               -e AWS_COGNITO_DOMAIN=${CognitoAppDomain} \
               -e DJANGO_SECRET_KEY=${SecretKey} \
               -e SECURE_SSL_REDIRECT=true \
-              -e AWS_REGION=eu-west-2 \
-              -e SF_FS_BACKEND_URL=${DataStoreLocation} \ 
+              -e AWS_REGION=eu-west-2 \ 
               ${FrontendRepoUri}/${FrontendRepoName}:${FrontendRepoVersion}
       NetworkInterfaces:
         - AssociatePublicIpAddress: "true"
