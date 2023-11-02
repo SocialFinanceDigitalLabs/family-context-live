@@ -9,7 +9,7 @@ urlpatterns = [
     path("case_id_search", views.case_id_search, name="case_id_search"),
     path("person/<int:person_id>/", views.person, name="person"),
     path(
-        "person/<int:person_id>/service/<int:service_id>/",
+        "person/<int:person_id>/service/<int:datasource_id>/",
         views.get_service_records,
         name="get_service_records",
     ),

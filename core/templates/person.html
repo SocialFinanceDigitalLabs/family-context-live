@@ -2,28 +2,8 @@
 
 {% block content %}
     {% include "page_nav.html" %}
-    <h2>Details of individual</h2>
 
-    <div class="container">
-        <table>
-            <tr>
-                <th>First name:</th>
-                <td>{{ person.first_name }}</td>
-            </tr>
-            <tr>
-                <th>Last name:</th>
-                <td>{{ person.last_name }}</td>
-            </tr>
-            <tr>
-                <th>Date of Birth:</th>
-                <td>{{ person.date_of_birth }}</td>
-            </tr>
-            <tr>
-                <th>Address:</th>
-                <td>{{ person.address }}</td>
-            </tr>
-        </table>
-    </div>
+    {% include "person_id_details.html" %}
 
     {% include "person_service_involvement.html" %}
 

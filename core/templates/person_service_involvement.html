@@ -11,8 +11,7 @@
         <div class="col s4 service-title">{{data_source.name}}</div>
         {% if data_source.contains_person %}
         <div class="col s5 center-align"><span class="badge records"><i class="tiny material-icons">check</i> Records Found</span></div>
-        <div class="col s3 right-align"><a id="{{data_source.id}}-toggle" class="btn-small grey lighten-3 black-text" ">View Records</a></div>
-        <!-- <div class="col s3 right-align"><a id="{{service.id}}-toggle" class="btn-small grey lighten-3 black-text" onCLick="fetchServiceRecords({{service.id}}, {{person.id}})">Show</a></div> -->
+        <div class="col s3 right-align"><a href="{% url 'get_service_records' person_id=person.id datasource_id=data_source.id %}" id="{{data_source.id}}-toggle" class="btn-small grey lighten-3 black-text" style="white-space: nowrap;">View Records</a></div>
         {% else %}
         <div class="col s5 center-align"><span class="badge norecords"><i class="tiny material-icons">clear</i> No Records Found</span></div>
         <div class="col s3 right-align"></div>
@@ -23,30 +22,3 @@
     </div>
     {% endfor %}
 </div>
-
-<!-- {% block javascript %}
-    <script>
-        function fetchServiceRecords(service_id, person_id) {
-            if(!service_id || !person_id){
-                return;
-            }
-            var current = $('#'+service_id+'-records').html();
-            if (current === "") {
-                var request = $.ajax({
-                    type: "GET",
-                    url: "{% url 'get_service_records' person_id=person.id service_id=9999 %}".replace(/9999/,service_id.toString()),
-                    dataType: "html"
-                });
-
-                request.done(function(msg) {
-                    $('#'+service_id+'-records').html( msg.replace(/\r?\n|\r/g, "").replace('"',""));
-                    $('#'+service_id+'-toggle').html("Hide");
-                });
-            } else {
-                $('#'+service_id+'-records').html("");
-                $('#'+service_id+'-toggle').html("Show");
-            }
-
-        }
-    </script>
-{% endblock javascript %} -->
