@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from .forms import NHSIdForm, NameSearchForm
 from .models import Person, DataSource, Record
+from .middleware import PageViewLoggerMiddleware
 
 import json
 
