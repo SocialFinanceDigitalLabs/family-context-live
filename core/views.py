@@ -8,6 +8,7 @@ from .forms import NHSIdForm, NameSearchForm
 from .models import Person, DataSource, Record
 
 import json
+from fuzzywuzzy import fuzz
 
 def index(request):
     if not request.user.is_authenticated:
@@ -35,11 +36,10 @@ def name_search(request):
     if request.method == "POST":
         form = NameSearchForm(request.POST)
         if form.is_valid():
-            results = Person.objects.filter(
-                Q(first_name__icontains=form.cleaned_data["first_name"])
-                | Q(last_name__icontains=form.cleaned_data["last_name"])
-                | Q(date_of_birth=form.cleaned_data["date_of_birth"])
-            )
+            # threshold value (0-100) is directly proportional to similarity between search terms and results
+            threshold = 50
+            persons = Person.objects.all()
+            results = [person for person in persons if (fuzz.ratio(person.first_name, form.cleaned_data["first_name"]) > threshold) | (fuzz.ratio(person.last_name, form.cleaned_data["last_name"]) > threshold)]
 
             return render(
                 request,
