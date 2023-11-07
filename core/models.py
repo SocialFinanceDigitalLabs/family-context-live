@@ -31,10 +31,3 @@ class Record(models.Model):
     def __str__(self):
         return self.record
     
-class PageViewLog(models.Model):
-    user = models.CharField(max_length=70, blank=True, null=True)
-    url = models.CharField(max_length=70, blank=True, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.url
