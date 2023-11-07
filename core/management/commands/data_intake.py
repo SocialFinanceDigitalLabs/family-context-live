@@ -1,5 +1,7 @@
 import json
 import pandas as pd
+from pathlib import Path
+
 from django.core.management.base import BaseCommand, CommandParser
 from django.utils import timezone
 from core.models import Person, DataSource, Record
@@ -11,9 +13,12 @@ class Command(BaseCommand):
     def add_arguments(self, parser: CommandParser) -> None:
         parser.add_argument("files", nargs="+", type=str)
 
-    def update_db(self, file, cols_as_expected) -> None:
-        data = pd.read_csv(file)
-        filename = file.split("\\")[-1].split(".")[0]
+    def update_db(self, file_path, cols_as_expected) -> None:
+        data = pd.read_csv(file_path)
+        filename = Path(file_path).stem
+
+        # formatting: capitalise first letter.
+        filename = filename.title()
 
         data.rename(columns=cols_as_expected, inplace=True)
 
