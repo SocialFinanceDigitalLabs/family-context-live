@@ -1,0 +1,13 @@
+{% extends "account/base.html" %}
+{% load i18n socialaccount %}
+{% block content %}
+<form 
+    action="{% provider_login_url 'amazon_cognito' %}"
+    method="post">
+    {% csrf_token %}
+    <h1>Sign In</h1>
+    <button type="submit" class="btn btn-primary btn-lg">
+        Sign in
+    </button>
+</form>
+{% endblock content %}
