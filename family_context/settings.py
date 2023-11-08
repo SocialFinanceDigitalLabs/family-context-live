@@ -36,6 +36,9 @@ CSRF_TRUSTED_ORIGINS = config(
     "TRUSTED_ORIGINS", cast=lambda v: [s.strip() for s in v.split(",")], default="https://127.0.0.1"
 )
 
+LOG_DESTINATION = config("LOG_DESTINATION", default="file_output")
+choose_log_handler = {"file_output": "file"}
+
 # Logging
 LOGGING = {
     "version": 1,
@@ -49,9 +52,9 @@ LOGGING = {
         },
     },
     "loggers": {
-        # all logs from the core app should be directed to the "file" handler
+        # specify handlers according to app of origin
         "core": {
-            "handlers": ["file"],
+            "handlers": [choose_log_handler[LOG_DESTINATION]],
             "level": "INFO",
         },
     },
