@@ -36,6 +36,33 @@ CSRF_TRUSTED_ORIGINS = config(
     "TRUSTED_ORIGINS", cast=lambda v: [s.strip() for s in v.split(",")], default="https://127.0.0.1"
 )
 
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers":False,
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "user_activity.log",
+            "level": "INFO",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        # all logs from the core app should be directed to the "file" handler
+        "core": {
+            "handlers": ["file"],
+            "level": "INFO",
+        },
+    },
+    "formatters": {
+        "verbose": {
+            "format": "%(asctime)s [%(levelname)s] - %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+}
+
 # Check if setting is set to allow this to run behind a load balancer
 LOAD_BALANCER_SSL = config("LOAD_BALANCER_SSL", default=False, cast=bool)
 if LOAD_BALANCER_SSL:
