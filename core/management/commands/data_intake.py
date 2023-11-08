@@ -52,9 +52,6 @@ class Command(BaseCommand):
             )
 
     def handle(self, *args, **kwargs):
-        Record.objects.all().delete()
-        DataSource.objects.all().delete()
-        Person.objects.all().delete()
 
         # standardise id column names
         cols_as_expected = {
