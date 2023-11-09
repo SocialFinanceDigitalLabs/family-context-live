@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 import yaml
 from faker import Faker
 
-fake = Faker()
+fake = Faker("en_GB")
 BASE_FIXTURES_DIR = "./fixtures"
 
 
