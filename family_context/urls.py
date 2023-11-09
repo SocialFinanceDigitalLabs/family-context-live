@@ -7,9 +7,13 @@ from .views import Home
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("core.urls")),
-    path("accounts/", include("allauth.urls")),
     path("home/", Home.as_view(), name="home"),
 ]
+
+if settings.SSO_USED:
+    urlpatterns.append(path("accounts/", include("allauth.urls")))
+else:
+    urlpatterns.append(path("accounts/", include("django.contrib.auth.urls")))
 
 if settings.DEBUG:
     urlpatterns += static(

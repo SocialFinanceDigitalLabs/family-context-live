@@ -86,7 +86,9 @@ COGNITO_CLIENT_SECRET = config(
     "AWS_COGNITO_APP_CLIENT_SECRET", default=False
 )
 
-if COGNITO_DOMAIN and AWS_REGION and COGNITO_CLIENT_ID and COGNITO_CLIENT_SECRET:
+SSO_USED = COGNITO_DOMAIN and AWS_REGION and COGNITO_CLIENT_ID and COGNITO_CLIENT_SECRET
+
+if SSO_USED:
     SOCIALACCOUNT_PROVIDERS = {
         "amazon_cognito": {
             "APP": {
@@ -122,7 +124,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = "family_context.wsgi.application"
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
