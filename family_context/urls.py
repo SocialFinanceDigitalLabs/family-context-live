@@ -1,5 +1,6 @@
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, reverse
+from django.shortcuts import redirect
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import Home
@@ -14,6 +15,13 @@ if settings.SSO_USED:
     urlpatterns.append(path("accounts/", include("allauth.urls")))
 else:
     urlpatterns.append(path("accounts/", include("django.contrib.auth.urls")))
+    urlpatterns.append(
+        path(
+            "account_logout/",
+            lambda request: redirect(reverse("logout")),
+            name="account_logout",
+        )
+    )
 
 if settings.DEBUG:
     urlpatterns += static(

@@ -33,7 +33,9 @@ ALLOWED_HOSTS = config(
 )
 
 CSRF_TRUSTED_ORIGINS = config(
-    "TRUSTED_ORIGINS", cast=lambda v: [s.strip() for s in v.split(",")], default="https://127.0.0.1"
+    "TRUSTED_ORIGINS",
+    cast=lambda v: [s.strip() for s in v.split(",")],
+    default="https://127.0.0.1",
 )
 
 # Check if setting is set to allow this to run behind a load balancer
@@ -53,12 +55,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "webpack_boilerplate",
     "django.contrib.postgres",
-    # 3rd Party
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    # Social Providers
-    "allauth.socialaccount.providers.amazon_cognito",
 ]
 
 MIDDLEWARE = [
@@ -70,7 +66,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "family_context.urls"
@@ -82,9 +77,7 @@ ACCOUNT_LOGOUT_ON_GET = True
 COGNITO_DOMAIN = config("AWS_COGNITO_DOMAIN", default=False)
 AWS_REGION = config("AWS_REGION", default=False)
 COGNITO_CLIENT_ID = config("AWS_COGNITO_APP_CLIENT_ID", default=False)
-COGNITO_CLIENT_SECRET = config(
-    "AWS_COGNITO_APP_CLIENT_SECRET", default=False
-)
+COGNITO_CLIENT_SECRET = config("AWS_COGNITO_APP_CLIENT_SECRET", default=False)
 
 SSO_USED = COGNITO_DOMAIN and AWS_REGION and COGNITO_CLIENT_ID and COGNITO_CLIENT_SECRET
 
@@ -103,6 +96,11 @@ if SSO_USED:
         "django.contrib.auth.backends.ModelBackend",
         "allauth.account.auth_backends.AuthenticationBackend",
     )
+    MIDDLEWARE.append("allauth.account.middleware.AccountMiddleware")
+    INSTALLED_APPS.append("allauth")
+    INSTALLED_APPS.append("allauth.account")
+    INSTALLED_APPS.append("allauth.socialaccount")
+    INSTALLED_APPS.append("allauth.socialaccount.providers.amazon_cognito")
 else:
     AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
 
