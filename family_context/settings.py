@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 
 import dj_database_url
@@ -38,26 +39,27 @@ CSRF_TRUSTED_ORIGINS = config(
     default="https://127.0.0.1",
 )
 
+LOG_LEVEL = config("LOG_LEVEL", default="INFO")
 LOG_DESTINATION = config("LOG_DESTINATION", default="file_output")
-choose_log_handler = {"file_output": "file"}
+choose_log_handler = {"file_output": "file", "console_output": "console"}
 
-# Logging
+# By default, log to console
 LOGGING = {
     "version": 1,
     "disable_existing_loggers":False,
     "handlers": {
-        "file": {
-            "class": "logging.FileHandler",
-            "filename": "user_activity.log",
-            "level": "INFO",
-            "formatter": "verbose",
-        },
+        "console": {
+           'level': LOG_LEVEL ,
+           'class': 'logging.StreamHandler',
+           'stream': sys.stdout,
+           'formatter': 'verbose'
+       },
     },
     "loggers": {
-        # specify handlers according to app of origin
         "core": {
-            "handlers": [choose_log_handler[LOG_DESTINATION]],
-            "level": "INFO",
+            "handlers": ["console"],
+            "level": LOG_LEVEL,
+            "propagate": True,
         },
     },
     "formatters": {
@@ -67,6 +69,17 @@ LOGGING = {
         },
     },
 }
+
+# add other logging output options.
+if LOG_DESTINATION:
+    LOGGING["handlers"]["file"] = {
+        "level": LOG_LEVEL,
+        "class": "logging.FileHandler",
+        "filename": "user_activity.log",
+        "formatter": "verbose",
+    }
+    LOGGING["loggers"]["core"]["handlers"] = [choose_log_handler[LOG_DESTINATION]]
+
 
 # Check if setting is set to allow this to run behind a load balancer
 LOAD_BALANCER_SSL = config("LOAD_BALANCER_SSL", default=False, cast=bool)
