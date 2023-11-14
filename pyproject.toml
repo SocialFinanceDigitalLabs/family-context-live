@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "3.11.6"
 django = "^4.2.7"
 python-webpack-boilerplate = "^1.0.0"
 django-material = "^1.11.3"
