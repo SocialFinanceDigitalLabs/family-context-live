@@ -9,6 +9,7 @@ from .models import Person, DataSource, Record
 
 import json
 
+
 def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
@@ -89,14 +90,18 @@ def person(request, person_id):
 
     # runtime attribute to indicate if service contains data about person.
     for source in data_sources:
-        source.person_record = Record.objects.filter(person_id=person_id).filter(datasource_id=source.id)
+        source.person_record = Record.objects.filter(person_id=person_id).filter(
+            datasource_id=source.id
+        )
         source.contains_person = source.person_record.exists()
-    
 
     return render(
         request,
         "person.html",
-        {"person": p, "data_sources": data_sources,},
+        {
+            "person": p,
+            "data_sources": data_sources,
+        },
     )
 
 
@@ -107,7 +112,15 @@ def get_service_records(request, person_id, datasource_id):
     data_source = DataSource.objects.get(id=datasource_id)
 
     # get service records for person as list[dict]
-    json_person_records = Record.objects.filter(person_id=person_id).filter(datasource_id=datasource_id)
-    data_source.person_records = [json.loads(record.record) for record in json_person_records]
+    json_person_records = Record.objects.filter(person_id=person_id).filter(
+        datasource_id=datasource_id
+    )
+    data_source.person_records = [
+        json.loads(record.record) for record in json_person_records
+    ]
 
-    return render(request, "person_service_records.html", {"person":person, "data_source": data_source, "sub": "get_service_records"})
+    return render(
+        request,
+        "person_service_records.html",
+        {"person": person, "data_source": data_source, "sub": "get_service_records"},
+    )
