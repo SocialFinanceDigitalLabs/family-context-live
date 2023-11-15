@@ -16,7 +16,7 @@ RUN npm run build
 ##################
 # DJANGO BUILDER #
 ##################
-FROM python:3.11.4-slim-buster AS builder
+FROM python:3.11.6-slim-bullseye AS builder
 
 # Copy code
 WORKDIR /code
@@ -28,7 +28,7 @@ ENV PYTHONUNBUFFERED 1
 
 # Install needed libraries
 RUN apt-get update && apt-get install -y ca-certificates gcc \
-    musl-dev libffi-dev musl-dev g++ npm libpq-dev python-psycopg2
+    musl-dev libffi-dev musl-dev g++ npm libpq-dev python3-psycopg2
 
 # Install needed libraries, but disable environments
 RUN pip install --upgrade pip && pip install --no-input poetry && \
@@ -40,9 +40,9 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /code/dist -r requirements.tx
 ###########
 # FINAL #
 ###########
-FROM python:3.11.4-slim-buster
+FROM python:3.11.6-slim-bullseye
 
-RUN apt-get update && apt-get install -y postgresql libpq-dev python-psycopg2
+RUN apt-get update && apt-get install -y postgresql libpq-dev python3-psycopg2
 
 # create directory for the app user
 RUN mkdir -p /home/app
@@ -68,6 +68,8 @@ COPY --from=fe /code/frontend/build /code/frontend/build
 RUN chown -R app:app /code
 
 RUN python manage.py collectstatic --noinput
+
+EXPOSE 8000
 
 # change to the app user
 USER app
