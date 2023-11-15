@@ -9,7 +9,7 @@ class Command(BaseCommand):
         Record.objects.all().delete()
         DataSource.objects.all().delete()
         Person.objects.all().delete()
-        
+
         self.stdout.write(f"Records: {len(Record.objects.all())}")
         self.stdout.write(f"Persons: {len(Person.objects.all())}")
         self.stdout.write(str(DataSource.objects.all()))
