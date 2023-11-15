@@ -1,12 +1,6 @@
 <h2>Details of Service Involvements</h2>
-<div class="container warning-container row">
-    <div class="chip warning-tag col s1">!</div><div class="warning-label col">For more details about
-    service involvement click here
-    </div>
-</div>
 <div class="container">
     {% for data_source in data_sources %}
-    <div class="divider"></div>
     <div class="row service-row valign-wrapper">
         <div class="col s4">
             <div class="service-title">{{data_source.name}}</div>
@@ -20,6 +14,7 @@
         <div class="col s3 right-align"></div>
         {% endif %}
     </div>
+    <div class="divider"></div>
     <div class="row">
         <div id="{{data_source.id}}-records" class="container col s12"></div>
     </div>
