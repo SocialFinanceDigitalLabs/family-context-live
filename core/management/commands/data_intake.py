@@ -32,10 +32,9 @@ class Command(BaseCommand):
             "nhs_number",
         ]
 
-        # store non-id data as json.        
+        # store non-id data as json.
         record_df = data[data.columns.difference(person_cols)]
         json_records = [json.dumps(row) for row in record_df.to_dict("records")]
-
 
         datasource = DataSource.objects.create(
             name=filename,
@@ -70,7 +69,7 @@ class Command(BaseCommand):
 
         for file in kwargs["files"]:
             self.update_db(file, cols_as_expected)
-        
+
         self.stdout.write(f"Records: {len(Record.objects.all())}")
         self.stdout.write(f"Persons: {len(Person.objects.all())}")
         self.stdout.write(str(DataSource.objects.all()))

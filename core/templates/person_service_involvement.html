@@ -1,39 +1,22 @@
 <h2>Details of Service Involvements</h2>
-<div class="container warning-container row valign-wrapper">
-    <div class="col s1">
-        <i class="small material-icons blue-text">info_outline</i>
-    </div>
-    <div class="warning-label col">
-        For more details about
-        service involvement click here
-    </div>
-</div>
 <div class="container">
     {% for data_source in data_sources %}
-        <div class="divider"></div>
-        <div class="row service-row valign-wrapper">
-            <div class="col s4 service-title">{{ data_source.name }}</div>
-            {% if data_source.contains_person %}
-                <div class="col s5 center-align">
-                    <span class="badge records"><i class="tiny material-icons">check</i> Records
-                    Found</span>
-                </div>
-                <div class="col s3 right-align">
-                    <a href="{% url 'get_service_records' person_id=person.id datasource_id=data_source.id %}"
-                       id="{{ data_source.id }}-toggle"
-                       class="btn-small grey lighten-3 black-text"
-                       style="white-space: nowrap">View Records</a>
-                </div>
-            {% else %}
-                <div class="col s5 center-align">
-                    <span class="badge norecords"><i class="tiny material-icons">clear</i> No
-                    Records Found</span>
-                </div>
-                <div class="col s3 right-align"></div>
-            {% endif %}
+    <div class="row service-row valign-wrapper">
+        <div class="col s4">
+            <div class="service-title">{{data_source.name}}</div>
+            <div>Last updated: {{data_source.last_update}}</div>
         </div>
-        <div class="row">
-            <div id="{{ data_source.id }}-records" class="container col s12"></div>
-        </div>
+        {% if data_source.contains_person %}
+        <div class="col s5 center-align"><span class="badge records"><i class="tiny material-icons">check</i> Records Found</span></div>
+        <div class="col s3 right-align"><a href="{% url 'get_service_records' person_id=person.id datasource_id=data_source.id %}" id="{{data_source.id}}-toggle" class="btn-small grey lighten-3 black-text" style="white-space: nowrap;">View Records</a></div>
+        {% else %}
+        <div class="col s5 center-align"><span class="badge norecords"><i class="tiny material-icons">clear</i> No Records Found</span></div>
+        <div class="col s3 right-align"></div>
+        {% endif %}
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+        <div id="{{data_source.id}}-records" class="container col s12"></div>
+    </div>
     {% endfor %}
 </div>
