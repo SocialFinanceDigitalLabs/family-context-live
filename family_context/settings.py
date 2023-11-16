@@ -40,8 +40,7 @@ CSRF_TRUSTED_ORIGINS = config(
 )
 
 LOG_LEVEL = config("LOG_LEVEL", default="INFO")
-LOG_DESTINATION = config("LOG_DESTINATION", default="file_output")
-choose_log_handler = {"file_output": "file", "console_output": "console"}
+LOG_DESTINATION = config("LOG_DESTINATION", default="console")
 
 # By default, log to console
 LOGGING = {
@@ -71,14 +70,14 @@ LOGGING = {
 }
 
 # add other logging output options.
-if LOG_DESTINATION:
+if LOG_DESTINATION == "file":
     LOGGING["handlers"]["file"] = {
         "level": LOG_LEVEL,
         "class": "logging.FileHandler",
         "filename": "user_activity.log",
         "formatter": "verbose",
     }
-    LOGGING["loggers"]["core"]["handlers"] = [choose_log_handler[LOG_DESTINATION]]
+    LOGGING["loggers"]["core"]["handlers"].append("file")
 
 
 # Check if setting is set to allow this to run behind a load balancer
