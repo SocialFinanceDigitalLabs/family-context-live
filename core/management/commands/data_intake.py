@@ -41,7 +41,7 @@ class Command(BaseCommand):
             last_update=timezone.now(),
         )
         for ind, row in data.iterrows():
-            person = Person.objects.create(
+            person, created = Person.objects.get_or_create(
                 last_name=row["last_name"],
                 first_name=row["first_name"],
                 date_of_birth=row["date_of_birth"],
