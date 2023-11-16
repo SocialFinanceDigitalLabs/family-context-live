@@ -14,7 +14,7 @@ class SearchPageTest(TestCase):
         test_user1.save()
 
     def test_view_url_exists_at_desired_location(self):
-        login = self.client.login(username="testuser1", password="testpassword123!")
+        self.client.login(username="testuser1", password="testpassword123!")
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
 
@@ -40,7 +40,7 @@ class PersonPageTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_view_url_exists_at_desired_location(self):
-        login = self.client.login(username="testuser1", password="testpassword123!")
+        self.client.login(username="testuser1", password="testpassword123!")
         response = self.client.get("/person/1/")
         self.assertEqual(response.status_code, 200)
 
@@ -74,6 +74,6 @@ class DataSourcePersonPageTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_view_url_exists_at_desired_location(self):
-        login = self.client.login(username="testuser1", password="testpassword123!")
+        self.client.login(username="testuser1", password="testpassword123!")
         response = self.client.get("/person/1/service/1/")
         self.assertEqual(response.status_code, 200)

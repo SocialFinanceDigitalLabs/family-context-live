@@ -49,7 +49,7 @@ class Command(BaseCommand):
                 age=row["age"],
                 nhs_number=row["nhs_number"],
             )
-            record = Record.objects.create(
+            Record.objects.create(
                 person_id=person,
                 datasource_id=datasource,
                 record=json_records[ind],

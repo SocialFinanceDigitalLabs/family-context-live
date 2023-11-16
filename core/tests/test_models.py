@@ -1,5 +1,5 @@
 from django.test import TestCase
-from core.models import Person, Record, DataSource
+from core.models import Person, DataSource
 
 
 class PersonTest(TestCase):

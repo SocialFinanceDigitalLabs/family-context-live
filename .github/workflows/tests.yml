@@ -3,9 +3,29 @@ name: Testing
 on: [push]
 
 jobs:
-  build:
-
+  compile-front-end:
     runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Install node dependencies
+        run: |
+          npm install
+      - name: Compile front-end
+        run: |
+          npm run build
+      - uses: actions/upload-artifact@master
+        with:
+          name: front-end-assets
+          path: frontend/build
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - compile-front-end
     services:
       postgres:
         image: postgres:11
@@ -21,7 +41,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
+    - uses: actions/download-artifact@v3
+      with:
+        name: front-end-assets
+        path: frontend/build
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -44,6 +67,20 @@ jobs:
     - name: Install dependencies
       run: poetry install
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+
+    - name: Put Static Files in Place
+      run: python manage.py collectstatic
+      env:
+        DJANGO_SECRET_KEY: some-secret-key
+        DEBUG: true
+        ALLOWED_HOSTS: localhost,127.0.0.1
+        SQL_ENGINE: django.db.backends.postgresql
+        SQL_DATABASE: postgres
+        SQL_USER: postgres
+        SQL_PASSWORD: postgres
+        SQL_HOST: localhost
+        SQL_PORT: 5432
+
 
     - name: Run Python Unit Tests
       run: |
