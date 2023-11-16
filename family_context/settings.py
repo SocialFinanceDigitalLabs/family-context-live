@@ -63,8 +63,8 @@ LOGGING = {
     },
     "formatters": {
         "verbose": {
-            "format": "%(asctime)s [%(levelname)s] - %(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S",
+            "format": "[%(asctime)s] [%(levelname)s] - %(message)s",
+            "datefmt": "%d/%b/%Y %H:%M:%S",
         },
     },
 }
