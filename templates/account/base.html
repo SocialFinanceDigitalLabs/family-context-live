@@ -2,98 +2,78 @@
 {% load webpack_loader static %}
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block head_title %}{% endblock head_title %}</title>
- <meta
-    name="description"
-    content="Family Context is a tool that allows social workers to easily access service involvement information on relevant individuals to a child."
-    />
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Family Context" />
-    <meta
-    property="og:description"
-    content="Family Context is a tool that allows social workers to easily access service involvement information on relevant individuals to a child."
-    />
-    <meta property="og:site_name" content="Family Context" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="{%  static 'img/favicon.ico' %}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
-    />
-    <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
-    />
-    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
-    <script
-    src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-    crossorigin="anonymous"
-    ></script>
-    {% stylesheet_pack 'app' %}
-    {% block extra_head %}
-    {% endblock extra_head %}
-  </head>
-  <body
-    class="bg-white font-sans leading-normal text-grey-800"
-  >
-    <nav class="fc-nav">
-        <div class="nav-wrapper">
-            <a href="/" class="brand-logo fc-logo">Family Context</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li>
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'account_logout' %}">Log Out</a>
-                    {% else %}
-                        <a href="{% url 'account_login' %}">Sign In</a>
-                    {% endif %}
-                </li>
-            </ul>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block head_title %}
+            {% endblock head_title %}
+        </title>
+        <meta name="description"
+              content="Family Context is a tool that allows social workers to easily access service involvement information on relevant individuals to a child." />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Family Context" />
+        <meta property="og:description"
+              content="Family Context is a tool that allows social workers to easily access service involvement information on relevant individuals to a child." />
+        <meta property="og:site_name" content="Family Context" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" />
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" />
+        <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+                crossorigin="anonymous"></script>
+        {% stylesheet_pack 'app' %}
+        {% block extra_head %}
+        {% endblock extra_head %}
+    </head>
+    <body class="bg-white font-sans leading-normal text-grey-800">
+        <nav class="fc-nav">
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo fc-logo">Family Context</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'account_logout' %}">Log Out</a>
+                        {% else %}
+                            <a href="{% url 'account_login' %}">Sign In</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container tag-container">
+            <div class="chip tag-item">Beta</div>
+            <div class="tag-label">This is a new service - Your feedback will help us improve it.</div>
         </div>
-    </nav>
-    <div class="container tag-container">
-        <div class="chip tag-item">
-            Beta
-        </div>
-        <div class="tag-label">
-            This is a new service - Your feedback will help us improve it.
-        </div>
-    </div>
-    <hr />
-    <div class="container">
-      {% block body %}
-
-      {% if messages %}
-    </div>
-    <div>
-      <strong>{% trans "Messages:" %}</strong>
-      <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-
-    {% block content %}
-    {% endblock content %}
-    {% endblock body %}
-    {% block extra_body %}
-    {% endblock extra_body %}
-    {% javascript_pack 'app' attrs='charset="UTF-8"' %}
-    {% block javascript %}
-    {% endblock javascript %}
-  </body>
+        <hr />
+        <div class="container">
+            {% block body %}
+                {% if messages %}
+                </div>
+                <div>
+                    <strong>{% trans "Messages:" %}</strong>
+                    <ul>
+                        {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% block content %}
+            {% endblock content %}
+        {% endblock body %}
+        {% block extra_body %}
+        {% endblock extra_body %}
+        {% javascript_pack 'app' attrs='charset="UTF-8"' %}
+        {% block javascript %}
+        {% endblock javascript %}
+    </body>
 </html>
