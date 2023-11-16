@@ -4,6 +4,7 @@ import random
 from datetime import datetime
 from django.core.management.base import BaseCommand
 import yaml
+import uuid
 from faker import Faker
 
 fake = Faker("en_GB")
@@ -24,7 +25,7 @@ class Person:
             tzinfo=None, minimum_age=18, maximum_age=85
         )
         self.age = self.calculate_age_from_dob()
-        self.nhs_no = random.randint(0, 100)
+        self.nhs_no = str(uuid.uuid4().int)[:10]
         self.address = fake.address().replace("\n", " ")
 
     def calculate_age_from_dob(self):

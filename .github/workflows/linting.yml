@@ -3,12 +3,12 @@ name: Linting
 on: [push]
 
 jobs:
-  build:
+  linting:
 
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.11.6"]
 
     steps:
     - uses: actions/checkout@v2

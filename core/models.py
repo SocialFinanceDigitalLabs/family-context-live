@@ -1,6 +1,4 @@
-from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 
 class Person(models.Model):
@@ -30,4 +28,3 @@ class Record(models.Model):
 
     def __str__(self):
         return self.record
-    
