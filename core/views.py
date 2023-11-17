@@ -92,7 +92,6 @@ def nhs_id_search(request):
         "search.html",
         {"name_form": name_form, "sub": "search", "nhs_form": nhs_form},
     )
-    # return render(request, "search.html", {"form": form, "sub": "nhs_id_search"})
 
 
 @login_required()
