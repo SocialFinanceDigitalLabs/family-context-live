@@ -1,10 +1,8 @@
 {% extends "core/index.html" %}
-
 {% block content %}
-
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="button">Start Session</button>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Start Session</button>
+    </form>
 {% endblock %}

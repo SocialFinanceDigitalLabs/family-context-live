@@ -1,10 +1,13 @@
 {% extends "core/index.html" %}
-
 {% block content %}
-<h2>Find Service Involvement</h2>
-<div>Search for an individual by name or in known cases their case ID</div>
-<ul>
-    <li><a href="{% url 'name_search' %}">Search by Name or DOB</a></li>
-    <li><a href="{% url 'case_id_search' %}">Search By Case ID</a></li>
-</ul>
+    <h2>Find Service Involvement</h2>
+    <div>Search for an individual by name or in known cases their case ID</div>
+    <ul>
+        <li>
+            <a href="{% url 'name_search' %}">Search by Name or DOB</a>
+        </li>
+        <li>
+            <a href="{% url 'case_id_search' %}">Search By Case ID</a>
+        </li>
+    </ul>
 {% endblock %}

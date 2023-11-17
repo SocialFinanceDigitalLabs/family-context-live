@@ -10,3 +10,8 @@ repos:
       - id: isort
         exclude: ^core/migrations/
         args: ["--profile", "black"]
+   - repo: https://github.com/Riverside-Healthcare/djLint
+     rev: v1.33.0
+     hooks:
+      - id: djlint
+        args: ["--profile=django", "--reformat"]

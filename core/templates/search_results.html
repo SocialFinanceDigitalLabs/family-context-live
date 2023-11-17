@@ -1,15 +1,16 @@
 {% extends "core/index.html" %}
-
 {% block content %}
     {% include "page_nav.html" %}
     <h2>Search results for {{ terms }}</h2>
     <div class="matches-found">{{ results|length }} matches found</div>
-
     <div class="container warning-container row valign-wrapper">
-        <div class="col s1"><i class="small material-icons blue-text">info_outline</i></div><div class="warning-label col">Please note: once selecting an individual from the list below, you may see sensitive information about that individual
+        <div class="col s1">
+            <i class="small material-icons blue-text">info_outline</i>
+        </div>
+        <div class="warning-label col">
+            Please note: once selecting an individual from the list below, you may see sensitive information about that individual
         </div>
     </div>
-
     <table class="responsive-table highlight">
         <thead>
             <tr>
@@ -22,16 +23,28 @@
             </tr>
         </thead>
         <tbody>
-    {% for result in results %}
-            <tr>
-                <td><a href="{% url 'person' person_id=result.id %}">{{ result.nhs_number}}</a></td>
-                <td><a href="{% url 'person' person_id=result.id %}">{{ result.first_name}}</a></td>
-                <td><a href="{% url 'person' person_id=result.id %}">{{ result.last_name}}</a></td>
-                <td><a href="{% url 'person' person_id=result.id %}">{{ result.date_of_birth}}</a></td>
-                <td><a href="{% url 'person' person_id=result.id %}">{{ result.age }}</a></td>
-                <td><a href="{% url 'person' person_id=result.id %}">{{ result.address}}</a></td>
-            </tr>
-    {% endfor %}
+            {% for result in results %}
+                <tr>
+                    <td>
+                        <a href="{% url 'person' person_id=result.id %}">{{ result.nhs_number }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'person' person_id=result.id %}">{{ result.first_name }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'person' person_id=result.id %}">{{ result.last_name }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'person' person_id=result.id %}">{{ result.date_of_birth }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'person' person_id=result.id %}">{{ result.age }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'person' person_id=result.id %}">{{ result.address }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}

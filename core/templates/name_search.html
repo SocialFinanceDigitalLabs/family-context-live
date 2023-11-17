@@ -1,9 +1,8 @@
 {% extends "core/index.html" %}
-
 {% block content %}
-<form action="{% url sub %}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit" class="button" />
-</form>
+    <form action="{% url sub %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit" class="button" />
+    </form>
 {% endblock %}
