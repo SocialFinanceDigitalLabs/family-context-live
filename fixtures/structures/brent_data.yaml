@@ -8,7 +8,7 @@ COMMON_FIELD_NAMES:
 
 DataTypes:
   - ASC:
-    _Data_type: "ASC.csv"
+    _Data_type: "Adult Social Care.csv"
     fields:
       Date of death: "Date"
       CMS No: "Numeric"
@@ -20,7 +20,7 @@ DataTypes:
       Service Event Start: "Date"
       Service Event End: "Date"
   - CSC:
-    _Data_type: "CSC.csv"
+    _Data_type: "Childrens Social Care.csv"
     fields:
       Date of death: "Date"
       CMS No: "Numeric"
@@ -32,7 +32,7 @@ DataTypes:
       Service/Event Start: "Date"
       Service/Event End: "Date"
   - HOUSING:
-    _Data_type: "housing.csv"
+    _Data_type: "Housing.csv"
     fields:
       Date of death: "Date"
       CMS No: "Numeric"
@@ -44,14 +44,14 @@ DataTypes:
       Service/Event Start: "Date"
       Service/Event End: "Date"
   - COMMUNITY:
-    _Data_type: "community.csv"
+    _Data_type: "Community.csv"
     fields:
       Date of death: "Date"
       Service/Event Desc: "String"
       Service/Event Start: "Date"
       Service/Event End: "Date"
   - ACUTE:
-    _Data_type: "acute.csv"
+    _Data_type: "Acute.csv"
     fields:
       Date of death: "Date"
       CMS No: "Numeric"
@@ -63,14 +63,14 @@ DataTypes:
       Next of kin name: "String"
       Next of kin contact details: "Numeric"
   - PRIMARY:
-    _Data_type: "primary.csv"
+    _Data_type: "Primary Care.csv"
     fields:
       Date of death: "Date"
       Name of GP: "FullName"
       Contact number: "Numeric"
       Date registered: "Date"
   - MENTAL_HEALTH:
-    _Data_type: "mental_health.csv"
+    _Data_type: "Mental Health.csv"
     fields:
       Date of death: "Date"
       Service/Event Desc: "String"

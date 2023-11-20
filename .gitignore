@@ -135,5 +135,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Dummy data
+# Sample Data
 fixtures/*.csv
+
+# Unneeded static files
+staticfiles
