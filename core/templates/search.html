@@ -11,7 +11,7 @@
             </form>
         </div>
         <div class="col s6">
-            <form action="{% url 'case_id_search' %}" method="post">
+            <form action="{% url 'nhs_id_search' %}" method="post">
                 {% csrf_token %}
                 {{ nhs_form }}
                 <input type="submit" value="Search" class="button">
