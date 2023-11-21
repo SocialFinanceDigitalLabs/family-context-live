@@ -94,8 +94,8 @@ WHITENOISE_MANIFEST_STRICT = False
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend\\build"),
-    os.path.join(BASE_DIR, "family_context\\static"),
+    os.path.join(BASE_DIR, "frontend", "build"),
+    os.path.join(BASE_DIR, "family_context", "static"),
 ]
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
