@@ -60,5 +60,3 @@ DataTypes:
       Presenting condition: "String"
       Count of admissions over 12 month period: "Numeric"
       High intensity A+E user: "Boolean"
-      Next of kin name: "String"
-      Next of kin contact details: "Numeric"
