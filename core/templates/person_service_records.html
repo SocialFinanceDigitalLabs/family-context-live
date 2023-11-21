@@ -10,7 +10,13 @@
             {% for field, value in record_dict.items %}
                 <tr>
                     <th>{{ field }}</th>
-                    <td>{{ value }}</td>
+                    <td>
+                        {% if value|stringformat:"s" == "nan" %}
+                            None
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         {% endfor %}
