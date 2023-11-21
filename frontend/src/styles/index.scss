@@ -146,3 +146,32 @@ span {
     font-weight: 700;
     padding-top: 10px;
 }
+
+.alerts {
+    width: 100%;
+    left: 0;
+    z-index: 10;
+  
+    .card-content {
+      display: flex;
+      flex-direction: row;
+  
+      p {
+        flex: auto;
+      }
+  
+      span {
+        padding-left: 10px;
+      }
+  
+      button {
+        position: relative;
+        background: transparent;
+        border: none;
+        width: 20px;
+        flex: 0 0 20px;
+        cursor: pointer;
+      }
+    }
+  }
+  
