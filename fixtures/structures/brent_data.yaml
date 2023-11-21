@@ -10,7 +10,7 @@ DataTypes:
   - ASC:
     _Data_type: "Adult Social Care.csv"
     fields:
-      Date of death: "RecentDate"
+      Date of death: "DeathDate"
       CMS No: "Numeric"
       Keyworker: "FullName"
       Email: "Email"
@@ -22,7 +22,7 @@ DataTypes:
   - CSC:
     _Data_type: "Childrens Social Care.csv"
     fields:
-      Date of death: "RecentDate"
+      Date of death: "DeathDate"
       CMS No: "Numeric"
       Keyworker: "FullName"
       Email: "Email"
@@ -34,7 +34,7 @@ DataTypes:
   - HOUSING:
     _Data_type: "Housing.csv"
     fields:
-      Date of death: "RecentDate"
+      Date of death: "DeathDate"
       CMS No: "Numeric"
       Name of housing officer: "FullName"
       Supported housing: "Boolean"
@@ -46,14 +46,14 @@ DataTypes:
   - COMMUNITY:
     _Data_type: "Community.csv"
     fields:
-      Date of death: "RecentDate"
+      Date of death: "DeathDate"
       Service/Event Desc: "String"
       Service/Event Start: "RecentDate"
       Service/Event End: "RecentDate"
   - ACUTE:
     _Data_type: "Acute.csv"
     fields:
-      Date of death: "RecentDate"
+      Date of death: "DeathDate"
       CMS No: "Numeric"
       Date of most recent hospital admission: "RecentDate"
       Date of discharge: "RecentDate"
@@ -63,14 +63,14 @@ DataTypes:
   - PRIMARY:
     _Data_type: "Primary Care.csv"
     fields:
-      Date of death: "RecentDate"
+      Date of death: "DeathDate"
       Name of GP: "FullName"
       Contact number: "Numeric"
       Date registered: "Date"
   - MENTAL_HEALTH:
     _Data_type: "Mental Health.csv"
     fields:
-      Date of death: "RecentDate"
+      Date of death: "DeathDate"
       Service/Event Desc: "String"
       Service/Event Start: "RecentDate"
       Service/Event End: "RecentDate"
