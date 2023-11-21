@@ -17,7 +17,7 @@ import dj_database_url
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -37,13 +37,6 @@ CSRF_TRUSTED_ORIGINS = config(
     cast=lambda v: [s.strip() for s in v.split(",")],
     default="https://127.0.0.1",
 )
-
-# Check if setting is set to allow this to run behind a load balancer
-LOAD_BALANCER_SSL = config("LOAD_BALANCER_SSL", default=False, cast=bool)
-if LOAD_BALANCER_SSL:
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-# Application definition
 
 INSTALLED_APPS = [
     "core.apps.CoreConfig",
@@ -70,40 +63,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "family_context.urls"
 
-SITE_ID = 1
-ACCOUNT_EMAIL_VERIFICATION = "none"
-LOGIN_REDIRECT_URL = "home"
-ACCOUNT_LOGOUT_ON_GET = True
-COGNITO_DOMAIN = config("AWS_COGNITO_DOMAIN", default=False)
-AWS_REGION = config("AWS_REGION", default=False)
-COGNITO_CLIENT_ID = config("AWS_COGNITO_APP_CLIENT_ID", default=False)
-COGNITO_CLIENT_SECRET = config("AWS_COGNITO_APP_CLIENT_SECRET", default=False)
-
-SSO_USED = COGNITO_DOMAIN and AWS_REGION and COGNITO_CLIENT_ID and COGNITO_CLIENT_SECRET
-
-if SSO_USED:
-    SOCIALACCOUNT_PROVIDERS = {
-        "amazon_cognito": {
-            "APP": {
-                "client_id": COGNITO_CLIENT_ID,
-                "secret": COGNITO_CLIENT_SECRET,
-            },
-            "SCOPE": {"aws.cognito.signin.user.admin", "openid", "email"},
-            "DOMAIN": COGNITO_DOMAIN,
-        }
-    }
-    AUTHENTICATION_BACKENDS = (
-        "django.contrib.auth.backends.ModelBackend",
-        "allauth.account.auth_backends.AuthenticationBackend",
-    )
-    MIDDLEWARE.append("allauth.account.middleware.AccountMiddleware")
-    INSTALLED_APPS.append("allauth")
-    INSTALLED_APPS.append("allauth.account")
-    INSTALLED_APPS.append("allauth.socialaccount")
-    INSTALLED_APPS.append("allauth.socialaccount.providers.amazon_cognito")
-else:
-    AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -122,6 +81,11 @@ TEMPLATES = [
         },
     },
 ]
+
+DATE_FORMAT = "%d %M %Y"
+SHORT_DATE_FORMAT = "%d %m %Y"
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
+
 WSGI_APPLICATION = "family_context.wsgi.application"
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
@@ -130,8 +94,8 @@ WHITENOISE_MANIFEST_STRICT = False
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/build"),
-    os.path.join(BASE_DIR, "family_context/static"),
+    os.path.join(BASE_DIR, "frontend", "build"),
+    os.path.join(BASE_DIR, "family_context", "static"),
 ]
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -142,58 +106,12 @@ WEBPACK_LOADER = {
     "MANIFEST_FILE": BASE_DIR / "frontend/build/manifest.json",
 }
 
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-MAX_CONN_AGE = 600
-DATABASE_URL = config("DATABASE_URL", default=False)
-
-if DATABASE_URL:
-    DATABASES = {
-        "default": dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=MAX_CONN_AGE,
-        ),
-    }
-else:
-    DATABASES = {
-        "default": dj_database_url.config(
-            default="sqlite://{BASE_DIR}/db.sqlite3",
-            conn_max_age=MAX_CONN_AGE,
-            ssl_require=False,
-        ),
-    }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",  # noqa: E501
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
-
+LANGUAGE_CODE = "en-gb"
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
 
 
