@@ -53,8 +53,10 @@ def generate_fake_value(data_type):
         return fake.first_name()
     elif data_type == "Surname":
         return fake.last_name()
+    elif data_type == "Company":
+        return fake.company()
     elif data_type == "String":
-        return fake.word()
+        return "Lorem ipsum dolor sit amet"
     elif data_type == "Date":
         return fake.date_of_birth(tzinfo=None, minimum_age=18, maximum_age=65)
     elif data_type == "Numeric":
