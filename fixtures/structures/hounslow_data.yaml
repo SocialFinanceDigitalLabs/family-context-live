@@ -24,7 +24,7 @@ DataTypes:
     fields:
       Date of death: "Date"
       CMS No: "Numeric"
-      Keyworker: "String"
+      Keyworker: "FullName"
       Email: "Email"
       Is a Carer: "Boolean"
       No of Carers: "Numeric"
@@ -36,10 +36,10 @@ DataTypes:
     fields:
       Date of death: "Date"
       CMS No: "Numeric"
-      Name of housing officer: "String"
+      Name of housing officer: "FullName"
       Supported housing: "Boolean"
       Social housing: "Boolean"
-      Name of housing provider: "String"
+      Name of housing provider: "Company"
       Service/Event Desc: "String"
       Service/Event Start: "Date"
       Service/Event End: "Date"
