@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from django.contrib.auth.decorators import login_required
@@ -6,8 +7,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from .forms import NameSearchForm, NHSIdForm
-from .models import DataSource, Person, Record
+from core.forms import NameSearchForm, NHSIdForm
+from core.models import DataSource, Person, Record
+from core.search import person_search
 
 
 def index(request):
@@ -36,11 +38,10 @@ def name_search(request):
     if request.method == "POST":
         form = NameSearchForm(request.POST)
         if form.is_valid():
-            results = Person.objects.filter(
-                Q(first_name__icontains=form.cleaned_data["first_name"])
-                | Q(last_name__icontains=form.cleaned_data["last_name"])
-                | Q(date_of_birth=form.cleaned_data["date_of_birth"])
-            )
+            date_of_birth: datetime.date = form.cleaned_data["date_of_birth"]
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            results = person_search(first_name, last_name, date_of_birth)
 
             return render(
                 request,
@@ -118,7 +119,6 @@ def person(request, person_id):
 
 @login_required()
 def get_service_records(request, person_id, datasource_id):
-
     person = Person.objects.get(id=person_id)
     data_source = DataSource.objects.get(id=datasource_id)
 
