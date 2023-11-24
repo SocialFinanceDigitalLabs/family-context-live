@@ -50,10 +50,8 @@ locally and the service easily able to update when changes are made.
 3. Run the service
    1. `poetry run python manage.py collectstatic` This pulls the static files into a central location so the
    application can use them
-   2. `poetry run python manage.py setup_test_data #` will generate fake data. Replace '#' with the number of children
-   to generate, but don't use too high of a number as the process can take a wile. I recommend about 10 or so.
-   3. `poetry run python manage.py createsuperuser` Will give you an admin user you can use to log into the admin page
-   4. `poetry run python manage.py runserver` This will run the website on [http://localhost:8000](http://localhost:8000) which you can access 
+   2. `poetry run python manage.py createsuperuser` Will give you an admin user you can use to log into the admin page
+   3. `poetry run python manage.py runserver` This will run the website on [http://localhost:8000](http://localhost:8000) which you can access 
    on your web browser. The admin site is on [http://localhost:8000/admin/](http://localhost:8000/admin/) where you can use the super user account you 
    created in the earlier step 
 
