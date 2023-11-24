@@ -1,10 +1,11 @@
 import json
-import pandas as pd
 from pathlib import Path
 
+import pandas as pd
 from django.core.management.base import BaseCommand, CommandParser
 from django.utils import timezone
-from core.models import Person, DataSource, Record
+
+from core.models import DataSource, Person, Record
 
 
 class Command(BaseCommand):

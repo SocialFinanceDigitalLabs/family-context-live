@@ -84,7 +84,7 @@ TEMPLATES = [
 
 DATE_FORMAT = "%d %M %Y"
 SHORT_DATE_FORMAT = "%d %m %Y"
-DATE_INPUT_FORMATS = ['%d-%m-%Y']
+DATE_INPUT_FORMATS = ["%d-%m-%Y"]
 
 WSGI_APPLICATION = "family_context.wsgi.application"
 

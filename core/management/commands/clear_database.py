@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from core.models import Person, DataSource, Record
+
+from core.models import DataSource, Person, Record
 
 
 class Command(BaseCommand):
