@@ -1,10 +1,11 @@
 import json
-import pandas as pd
 from pathlib import Path
 
+import pandas as pd
 from django.core.management.base import BaseCommand, CommandParser
 from django.utils import timezone
-from core.models import Person, DataSource, Record
+
+from core.models import DataSource, Person, Record
 
 
 class Command(BaseCommand):
@@ -36,12 +37,12 @@ class Command(BaseCommand):
         record_df = data[data.columns.difference(person_cols)]
         json_records = [json.dumps(row) for row in record_df.to_dict("records")]
 
-        datasource = DataSource.objects.create(
+        datasource, source_created = DataSource.objects.get_or_create(
             name=filename,
             last_update=timezone.now(),
         )
         for ind, row in data.iterrows():
-            person, created = Person.objects.get_or_create(
+            person, person_created = Person.objects.get_or_create(
                 last_name=row["last_name"],
                 first_name=row["first_name"],
                 date_of_birth=row["date_of_birth"],
@@ -56,7 +57,6 @@ class Command(BaseCommand):
             )
 
     def handle(self, *args, **kwargs):
-
         # standardise id column names
         cols_as_expected = {
             "Last Name": "last_name",
