@@ -1,22 +1,24 @@
 {% extends "core/index.html" %}
-
 {% block content %}
-
-{% include "page_nav.html" %}
-{% include "person_id_details.html" %}
-
-<h2>{{data_source.name}} records</h2>
-<h6>Information was last updated on {{data_source.last_update}}</h6>
-<br>
-
-<table>
-    {% for record_dict in data_source.person_records %}
-        {% for field, value in record_dict.items %}
-            <tr>
-                <th> {{field}} </th>
-                <td>{{value}} </td>
-            </tr>
+    {% include "page_nav.html" %}
+    {% include "person_id_details.html" %}
+    <h2>{{ data_source.name }} records</h2>
+    <h6>Information was last updated on {{ data_source.last_update }}</h6>
+    <br>
+    <table>
+        {% for record_dict in data_source.person_records %}
+            {% for field, value in record_dict.items %}
+                <tr>
+                    <th>{{ field }}</th>
+                    <td>
+                        {% if value|stringformat:"s" == "nan" %}
+                            None
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}    
-</table>
+    </table>
 {% endblock %}

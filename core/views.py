@@ -59,16 +59,22 @@ def name_search(request):
 
 
 @login_required()
-def case_id_search(request):
+def nhs_id_search(request):
     if request.method == "POST":
         form = NHSIdForm(request.POST)
         if form.is_valid():
             nhs_number = form.cleaned_data["nhs_number"]
-            results = Person.objects.filter(nhs_number=nhs_number)
-
+            results = Person.objects.filter(Q(nhs_number__icontains=nhs_number))
             if not results:
                 # Need to display error that record wasn't found...
-                form = NHSIdForm()
+                return render(
+                    request,
+                    "search_results.html",
+                    {
+                        "results": results,
+                        "terms": nhs_number,
+                    },
+                )
             elif len(results) == 1:
                 return redirect(reverse("person", kwargs={"person_id": results[0].id}))
             else:
@@ -78,9 +84,14 @@ def case_id_search(request):
                     {"results": results, "terms": form.cleaned_data["nhs_number"]},
                 )
     else:
-        form = NHSIdForm()
+        nhs_form = NHSIdForm()
+        name_form = NameSearchForm()
 
-    return render(request, "search.html", {"form": form, "sub": "case_id_search"})
+    return render(
+        request,
+        "search.html",
+        {"name_form": name_form, "sub": "search", "nhs_form": nhs_form},
+    )
 
 
 @login_required()

@@ -1,6 +1,4 @@
-
 <h2>Details of individual</h2>
-
 <div class="container">
     <table>
         <tr>
@@ -16,8 +14,16 @@
             <td>{{ person.date_of_birth }}</td>
         </tr>
         <tr>
+            <th>Age</th>
+            <td>{{ person.age }}</td>
+        </tr>
+        <tr>
             <th>Address:</th>
             <td>{{ person.address }}</td>
+        </tr>
+        <tr>
+            <th>NHS number</th>
+            <td>{{ person.nhs_number }}</td>
         </tr>
     </table>
 </div>

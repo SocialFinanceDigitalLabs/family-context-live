@@ -1,24 +1,21 @@
 {% extends "core/index.html" %}
-
 {% block content %}
-<h2>Find Service Involvement</h2>
-<div style="padding-bottom:50px;">Search for an individual by name or in known cases their NHS number</div>
-<div class="row">
-    <div class="col s6" style="border-right:1px solid #aaaaaa;">
-        <form action="{% url 'name_search' %}" method="post">
-            {% csrf_token %}
-            {{ name_form }}
-            <input type="submit" value="Search" class="button">
-        </form>
+    <h2>Find Service Involvement</h2>
+    <div style="padding-bottom:50px;">Search for an individual by name or in known cases their NHS number</div>
+    <div class="row">
+        <div class="col s6" style="border-right:1px solid #aaaaaa;">
+            <form action="{% url 'name_search' %}" method="post">
+                {% csrf_token %}
+                {{ name_form }}
+                <input type="submit" value="Search" class="button">
+            </form>
+        </div>
+        <div class="col s6">
+            <form action="{% url 'nhs_id_search' %}" method="post">
+                {% csrf_token %}
+                {{ nhs_form }}
+                <input type="submit" value="Search" class="button">
+            </form>
+        </div>
     </div>
-    <div class="col s6">
-        <form action="{% url 'case_id_search' %}" method="post">
-            {% csrf_token %}
-            {{ nhs_form }}
-            <input type="submit" value="Search" class="button">
-        </form>
-    </div>
-
-</div>
-
 {% endblock %}
