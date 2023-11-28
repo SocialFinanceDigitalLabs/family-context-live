@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 
 import dj_database_url
@@ -38,6 +39,54 @@ CSRF_TRUSTED_ORIGINS = config(
     default="https://127.0.0.1",
 )
 
+LOG_LEVEL = config("LOG_LEVEL", default="INFO")
+LOG_DESTINATION = config("LOG_DESTINATION", default="console")
+
+# By default, log to console
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": LOG_LEVEL,
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "core": {
+            "handlers": ["console"],
+            "level": LOG_LEVEL,
+            "propagate": True,
+        },
+    },
+    "formatters": {
+        "verbose": {
+            "format": "[%(asctime)s] [%(levelname)s] - %(message)s",
+            "datefmt": "%d/%b/%Y %H:%M:%S",
+        },
+    },
+}
+
+# add other logging output options.
+if LOG_DESTINATION == "file":
+    LOGGING["handlers"]["file"] = {
+        "level": LOG_LEVEL,
+        "class": "logging.FileHandler",
+        "filename": "user_activity.log",
+        "formatter": "verbose",
+    }
+    LOGGING["loggers"]["core"]["handlers"].append("file")
+
+
+# Check if setting is set to allow this to run behind a load balancer
+LOAD_BALANCER_SSL = config("LOAD_BALANCER_SSL", default=False, cast=bool)
+if LOAD_BALANCER_SSL:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# Application definition
+
 INSTALLED_APPS = [
     "core.apps.CoreConfig",
     "django.contrib.admin",
@@ -59,6 +108,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
+    "core.middleware.PageViewLoggerMiddleware",
 ]
 
 ROOT_URLCONF = "family_context.urls"
@@ -84,7 +135,7 @@ TEMPLATES = [
 
 DATE_FORMAT = "%d %M %Y"
 SHORT_DATE_FORMAT = "%d %m %Y"
-DATE_INPUT_FORMATS = ['%d-%m-%Y']
+DATE_INPUT_FORMATS = ["%d-%m-%Y"]
 
 WSGI_APPLICATION = "family_context.wsgi.application"
 
