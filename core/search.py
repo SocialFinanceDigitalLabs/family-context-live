@@ -13,16 +13,7 @@ def person_search(
 ) -> QuerySet[Person]:
     """
     Filter people based on their first name, last name, and optional date of birth.
-    Rank them by corresponding match relevance.
-
-        Args:
-        first_name (str): The first name of the person to search for.
-        last_name (str): The last name of the person to search for.
-        date_of_birth (Optional[datetime.date], optional): The date of birth of the person to search for. Defaults to None.
-
-    Returns:
-        QuerySet[Person]: The queryset of persons matching the search criteria, ordered by a matching rank.
-
+    Rank them by corresponding match relevance and return the filtered and ordered queryset.
     """
     query = Q(first_name__icontains=first_name) | Q(last_name__icontains=last_name)
     if date_of_birth is not None:
@@ -31,6 +22,7 @@ def person_search(
     # apply base filtering
     results = Person.objects.filter(query)
 
+    # annotate each result with a score based on the search criteria
     annotations = dict(
         k10=score_annotation("first_name", "iexact", first_name, 4),
         k20=score_annotation("last_name", "iexact", last_name, 4),
@@ -67,6 +59,10 @@ def score_annotation(
 
     Returns:
         Case: The updated Case object with the calculated score.
+
+    Examples:
+        >>> score_annotation("first_name", "iexact", "John", 4)
+        Case(When(first_name__iexact='John', then=Value(4)), default=Value(0), output_field=IntegerField())
     """
 
     query = f"{field_name}__{expression}" if expression else field_name
