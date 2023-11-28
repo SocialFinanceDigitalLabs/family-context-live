@@ -3,8 +3,8 @@ from datetime import date
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from core.builder import Builder
 from core.search import person_search
+from core.util.builder import Builder
 
 User = get_user_model()
 
