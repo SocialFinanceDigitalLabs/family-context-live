@@ -1,5 +1,6 @@
 from decouple import config
-from family_context.settings.base import MIDDLEWARE, INSTALLED_APPS
+
+from family_context.settings.base import INSTALLED_APPS, MIDDLEWARE
 
 # Check if setting is set to allow this to run behind a load balancer
 LOAD_BALANCER_SSL = config("LOAD_BALANCER_SSL", default=False, cast=bool)

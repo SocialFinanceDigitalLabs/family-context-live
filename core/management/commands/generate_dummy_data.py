@@ -1,10 +1,11 @@
 import csv
 import os
 import random
-from datetime import datetime, timedelta
-from django.core.management.base import BaseCommand
-import yaml
 import uuid
+from datetime import datetime, timedelta
+
+import yaml
+from django.core.management.base import BaseCommand
 from faker import Faker
 
 fake = Faker("en_GB")
@@ -64,7 +65,7 @@ def generate_fake_value(data_type):
         start_date = end_date - timedelta(days=365)
         return fake.date_between_dates(date_start=start_date, date_end=end_date)
     elif data_type == "DeathDate":
-        if random.randint(0,100) <= 2:
+        if random.randint(0, 100) <= 2:
             end_date = datetime.now()
             start_date = end_date - timedelta(days=365)
             return fake.date_between_dates(date_start=start_date, date_end=end_date)

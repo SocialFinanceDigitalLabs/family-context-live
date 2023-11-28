@@ -1,6 +1,7 @@
-from django.test import TestCase
-from core.models import Person, DataSource, Record
 from django.contrib.auth import get_user_model
+from django.test import TestCase
+
+from core.models import DataSource, Person, Record
 
 User = get_user_model()
 

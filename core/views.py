@@ -1,13 +1,13 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from .forms import NHSIdForm, NameSearchForm
-from .models import Person, DataSource, Record
-
-import json
+from .forms import NameSearchForm, NHSIdForm
+from .models import DataSource, Person, Record
 
 
 def index(request):

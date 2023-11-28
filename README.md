@@ -41,6 +41,7 @@ locally and the service easily able to update when changes are made.
    2. Copy the file `.env.sample` to `.env` and fill out the values. If you want to use SQLite, then 
    delete the database variables
    3. `poetry run python manage.py migrate` to setup the database
+   4. Install pre-commit so it runs the formatting rules before every commit: `pre-commit install`.
 2. Build the front end 
    1. `cd frontend`
    2. `npm install` to install the required libraries
