@@ -178,3 +178,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+SESSION_COOKIE_AGE = config("SESSION_TIMEOUT", default=600, cast=int)
