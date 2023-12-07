@@ -110,6 +110,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "core.middleware.PageViewLoggerMiddleware",
+    "core.middleware.OneSessionPerUserMiddleware",
 ]
 
 ROOT_URLCONF = "family_context.urls"
