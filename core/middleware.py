@@ -41,7 +41,10 @@ class OneSessionPerUserMiddleware:
                 current_session_key
                 and current_session_key != request.session.session_key
             ):
-                Session.objects.get(session_key=current_session_key).delete()
+                if session := Session.objects.filter(
+                    session_key=current_session_key
+                ).first():
+                    session.delete()
             # Update the user's session_key in the db
             logged_in_user.session_key = request.session.session_key
             logged_in_user.save()
