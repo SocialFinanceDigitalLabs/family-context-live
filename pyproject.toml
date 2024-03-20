@@ -24,7 +24,7 @@ openpyxl = "^3.1.2"
 django-allauth = "^0.57.0"
 
 [tool.poetry.group.dev.dependencies]
-black = "^22.10.0"
+black = "^24.3.0"
 isort = "^5.10.1"
 flake8 = "^5.0.4"
 pre-commit = "^2.20.0"
